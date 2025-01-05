@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MyappApplication {
 
 	public static void main(String[] args) {
+		// Run this as a Java application, not on server
+		// (∵ already embedded in Spring Boot app)
 		SpringApplication.run(MyappApplication.class, args);
 	}
 
