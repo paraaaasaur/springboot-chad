@@ -1,5 +1,6 @@
 package com.herbivore.demo.myapp.rest;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,6 +9,17 @@ import java.util.Random;
 @RestController
 public class FunRestController {
 
+    // Inject properties for: coach.name and team.name
+    @Value("${coach.name}")
+    private String coachName;
+    @Value("${team.name}")
+    private String teamName;
+
+
+    @GetMapping("/teaminfo")
+    public String getTeamInfo() {
+        return String.format("<h1>Coach: %s</h1><h1>\n\n\nTeam: %s</h1>", coachName, teamName);
+    }
 
     @GetMapping("/") // expose "/" that returns "hello world"
     public String sayHello() {
