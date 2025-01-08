@@ -13,8 +13,16 @@ public class DemoController {
 
 
     // define a constructor for dependency injection
+//    @Autowired
+//    public DemoController(Coach coach) {
+//        System.out.println("From constructor DI");
+//        this.myCoach = coach;
+//    }
+
+    // define a setter method for dependency injection
     @Autowired
-    public DemoController(Coach coach) {
+    public void riddikulus(Coach coach) {
+        System.out.println("From setter method DI");
         this.myCoach = coach;
     }
 
