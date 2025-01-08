@@ -3,10 +3,7 @@ package com.herbivore.demo.myapp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-//@SpringBootApplication(
-//		scanBasePackages = {"com.herbivore.demo.myapp",
-//				"com.herbivore.util"}
-//)
+
 @SpringBootApplication
 public class MyappApplication {
 
