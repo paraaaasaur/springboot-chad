@@ -37,7 +37,11 @@ public class MyappApplication {
 
 //			queryStudentsByLastName(studentDAO);
 
-			updateStudent(studentDAO);
+//			updateStudent(studentDAO);
+
+			deleteStudent(studentDAO);
+
+			deleteAllStudents(studentDAO);
 		};
     }
 
@@ -139,6 +143,18 @@ public class MyappApplication {
 		// Display the update student
 		System.out.println("> Update student: " + studentDAO.findById(id));
 
+	}
+
+	private void deleteStudent(StudentDAO studentDAO) {
+		int deleteId = 6;
+		System.out.println("> Deleting student, id = " + deleteId);
+		studentDAO.delete(deleteId);
+	}
+
+	private void deleteAllStudents(StudentDAO studentDAO) {
+		System.out.println("> Deleting all students");
+		int n = studentDAO.deleteAll();
+		System.out.println("> Deleted row counts: " + n);
 	}
 
 	@PostConstruct

@@ -1,8 +1,8 @@
 package com.herbivore.demo.myapp.dao;
 
 import com.herbivore.demo.myapp.entity.Student;
-import io.github.paraaaasaur.util.Toolbox;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.Tuple;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
@@ -97,11 +97,28 @@ public class StudentDAOImpl implements StudentDAO {
 		entityManager.merge(student);
 	}
 
+	@Override
 	@Transactional
+	public void delete(int id) {
+		// Retrieve the student
+		Student foundStudent = entityManager.find(Student.class, id);
+
+		// Delete the student
+		entityManager.remove(foundStudent);
+	}
+
+	@Override
+	@Transactional
+	public int deleteAll() {
+		String jpql = "DELETE FROM Student s";
+		Query deleteQuery = entityManager.createQuery(jpql);
+		int deletedRows = deleteQuery.executeUpdate();
+
+		return deletedRows;
+	}
+
 	public void test() {
-		Student foundStudent = entityManager.find(Student.class, 1);
-		String newFirstName = Toolbox.caseSwap(foundStudent.getFirstName());
-		foundStudent.setFirstName(newFirstName);
+
 	}
 
 }
