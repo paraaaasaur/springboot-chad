@@ -1,6 +1,7 @@
 package com.herbivore.demo.myapp.dao;
 
 import com.herbivore.demo.myapp.entity.Student;
+import io.github.paraaaasaur.util.Toolbox;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Tuple;
 import jakarta.persistence.TypedQuery;
@@ -90,8 +91,17 @@ public class StudentDAOImpl implements StudentDAO {
 		return query.getResultList();
 	}
 
-	public void test() {
+	@Transactional
+	@Override
+	public void update(Student student) {
+		entityManager.merge(student);
+	}
 
+	@Transactional
+	public void test() {
+		Student foundStudent = entityManager.find(Student.class, 1);
+		String newFirstName = Toolbox.caseSwap(foundStudent.getFirstName());
+		foundStudent.setFirstName(newFirstName);
 	}
 
 }
