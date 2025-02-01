@@ -29,7 +29,7 @@ public class MyappApplication {
 		return strargs -> {
 //			createStudent(studentDAO);
 
-//			createMultipleStudents(studentDAO);
+			createMultipleStudents(studentDAO);
 
 //			readStudent(studentDAO);
 
@@ -39,9 +39,9 @@ public class MyappApplication {
 
 //			updateStudent(studentDAO);
 
-			deleteStudent(studentDAO);
+//			deleteStudent(studentDAO);
 
-			deleteAllStudents(studentDAO);
+//			deleteAllStudents(studentDAO);
 		};
     }
 
