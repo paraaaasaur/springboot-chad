@@ -8,6 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.Order;
 
 import java.util.Comparator;
 import java.util.List;
@@ -19,17 +20,51 @@ import static io.github.paraaaasaur.util.Toolbox.*;
 public class MyappApplication {
 
 	public static void main(String[] args) {
-		// Run this as a Java application, not on server
-		// (∵ already embedded in Spring Boot app)
 		SpringApplication.run(MyappApplication.class, args);
 	}
 
+	@Order(value = 4)
+	@Bean
+	public CommandLineRunner clrV4() {
+		return strargs -> {
+			System.out.println("Inside v4");
+		};
+	}
+
+	@Order(2)
+	@Bean
+	public CommandLineRunner clrV2() {
+		return args -> {
+			System.out.println("Inside v2");
+		};
+	}
+
+	@Order(3)
+	@Bean
+	public CommandLineRunner clrV3() {
+		return args -> {
+			System.out.println("Inside v3");
+		};
+	}
+
+	@Order(Integer.MAX_VALUE)
 	@Bean
 	public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
-		return strargs -> {
+		return args -> {
+			if (args.length != 0) {
+				System.out.println("> You are see this because you offered args" +
+								   "on a command line!");
+				System.out.println("> They are: ");
+				for (String arg : args) {
+					System.out.println("\t- " + arg);
+				}
+			} else {
+				System.out.println("> No command line arguments detected!");
+			}
+
 //			createStudent(studentDAO);
 
-			createMultipleStudents(studentDAO);
+//			createMultipleStudents(studentDAO);
 
 //			readStudent(studentDAO);
 
