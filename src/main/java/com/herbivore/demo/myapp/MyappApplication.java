@@ -9,8 +9,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import static io.github.paraaaasaur.util.Toolbox.blue;
-import static io.github.paraaaasaur.util.Toolbox.yellow;
+import java.util.Comparator;
+import java.util.List;
+
+import static io.github.paraaaasaur.util.Toolbox.*;
 
 
 @SpringBootApplication
@@ -25,9 +27,18 @@ public class MyappApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(StudentDAO studentDAO) {
 		return strargs -> {
-			createStudent(studentDAO);
+//			createStudent(studentDAO);
+
+//			createMultipleStudents(studentDAO);
+
+			readStudent(studentDAO);
+
+			queryForStudents(studentDAO);
+
+			queryStudentsByLastName(studentDAO);
 		};
     }
+
 
 	private void createStudent(StudentDAO studentDAO) {
 		// Create the Student object
@@ -56,6 +67,57 @@ public class MyappApplication {
 		studentDAO.save(tempStudent1);
 		studentDAO.save(tempStudent2);
 		studentDAO.save(tempStudent3);
+	}
+
+	private void readStudent(StudentDAO studentDAO) {
+
+		// Create a student object
+		System.out.println("> Creating new Student object...");
+		Student tempStudent = new Student("Dafty", "Duck", "daftyyy@luv2code.com");
+
+		// Save the student
+		System.out.println("> Saving the Student...");
+		studentDAO.save(tempStudent);
+
+		// Display id of the saved student
+		int id = tempStudent.getId();
+		System.out.println("> Saved Student's id = " + id);
+
+		// Retrieve the Student based on the id (primary key)
+		System.out.println("> Retrieving the Student with id = " + id);
+		Student foundStudent = studentDAO.findById(id);
+
+		// Display the retrieved student
+		System.out.println("> Found the student: " + foundStudent);
+
+	}
+
+	private void queryForStudents(StudentDAO studentDAO) {
+
+		if (true) {
+			// get a list of students
+			List<Student> students = studentDAO.findAll();
+
+			// display list of students
+			students.stream()
+//					.sorted(Comparator.comparing(Student::getLastName))
+					.forEach(System.out::println);
+		}
+
+		if (false) {
+			studentDAO.findAllInTuple().stream()
+					.sorted(Comparator.comparing(tuple -> tuple.get(2, String.class)))
+					.forEach(System.out::println);
+		}
+	}
+
+	private void queryStudentsByLastName(StudentDAO studentDAO) {
+
+		// Get a list of Students
+		List<Student> students = studentDAO.findByLastName("duck");
+
+		// Display list of Students
+		students.forEach(System.out::println);
 	}
 
 	@PostConstruct
