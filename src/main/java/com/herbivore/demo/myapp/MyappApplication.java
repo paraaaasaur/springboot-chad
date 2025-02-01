@@ -31,11 +31,13 @@ public class MyappApplication {
 
 //			createMultipleStudents(studentDAO);
 
-			readStudent(studentDAO);
+//			readStudent(studentDAO);
 
-			queryForStudents(studentDAO);
+//			queryForStudents(studentDAO);
 
-			queryStudentsByLastName(studentDAO);
+//			queryStudentsByLastName(studentDAO);
+
+			updateStudent(studentDAO);
 		};
     }
 
@@ -118,6 +120,25 @@ public class MyappApplication {
 
 		// Display list of Students
 		students.forEach(System.out::println);
+	}
+
+	private void updateStudent(StudentDAO studentDAO) {
+//		studentDAO.test();
+
+		// Retrieve student based on the id: primary key
+		final int id = 1;
+		System.out.println("> Getting student with id = " + id);
+		Student foundStudent = studentDAO.findById(id);
+
+		// Change his or her first name
+		foundStudent.setFirstName("Gura");
+
+		// Update the student
+		studentDAO.update(foundStudent);
+
+		// Display the update student
+		System.out.println("> Update student: " + studentDAO.findById(id));
+
 	}
 
 	@PostConstruct
