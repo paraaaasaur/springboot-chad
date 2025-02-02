@@ -1,8 +1,0 @@
-USE student_tracker;
-SELECT * FROM student;
---
-START TRANSACTION;
-TRUNCATE student;
-ALTER TABLE student AUTO_INCREMENT = 1;
-DROP TABLE student;
-COMMIT;
