@@ -17,8 +17,7 @@ public class Student {
 		this.lastName = lastName;
 	}
 
-	/** broken getter */
-	public String ggeettFirstName() {
+	public String getFirstName() {
 		return firstName;
 	}
 
@@ -26,8 +25,7 @@ public class Student {
 		this.firstName = firstName;
 	}
 
-	/** misspelled getter */
-	public String getLaaaaaastName() {
+	public String getLastName() {
 		return lastName;
 	}
 
