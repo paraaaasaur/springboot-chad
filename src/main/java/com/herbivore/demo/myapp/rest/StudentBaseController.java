@@ -3,6 +3,7 @@ package com.herbivore.demo.myapp.rest;
 import com.herbivore.demo.myapp.entity.Student;
 import jakarta.annotation.PostConstruct;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,5 +29,11 @@ public class StudentBaseController {
 	@GetMapping("/students")
 	public List<Student> getStudents() {
 		return students;
+	}
+
+	// Endpoint "/students/{studentId}"
+	@GetMapping("/students/{studentId}")
+	public Student getStudent(@PathVariable int studentId) {
+		return students.get(studentId);
 	}
 }
