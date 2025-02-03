@@ -26,5 +26,30 @@ public class EmployeeDAOJPAImpl implements EmployeeDAO {
 	}
 
 	@Override
+	public Employee findById(int id) {
+		return entityManager.find(Employee.class, id);
+	}
+
+	/*	@Transactional...? NOPE!! Now the job belongs to the service class! */
+	@Override
+	public Employee save(Employee employee) {
+
+		// merge() does INSERT or UPDATE, depending on the...
+		Employee dbEmployee = entityManager.merge(employee);
+
+		return dbEmployee;
+	}
+
+	// @Transactional
+	@Override
+	public void deleteById(int id) {
+		entityManager.remove(
+				entityManager.find(Employee.class, id)
+		);
+	}
+
+	@Override
 	public void test() {}
+
+
 }
