@@ -1,7 +1,7 @@
 package com.herbivore.demo.myapp.rest;
 
-import com.herbivore.demo.myapp.dao.EmployeeDAO;
 import com.herbivore.demo.myapp.entity.Employee;
+import com.herbivore.demo.myapp.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,15 +13,16 @@ import java.util.List;
 @RequestMapping("/api")
 public class EmployeeRestController {
 
-	private EmployeeDAO employeeDAO;
+	// No more raw DAOs in the controllers. It's service!
+	private EmployeeService employeeService;
 
 	@Autowired
-	public EmployeeRestController(EmployeeDAO employeeDAO) {
-		this.employeeDAO = employeeDAO;
+	public EmployeeRestController(EmployeeService employeeService) {
+		this.employeeService = employeeService;
 	}
 
 	@GetMapping("/employees")
 	public List<Employee> findAll() {
-		return employeeDAO.findAll();
+		return employeeService.findAll();
 	}
 }
