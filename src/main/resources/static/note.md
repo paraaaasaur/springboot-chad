@@ -1,7 +1,7 @@
-### Extra notes that doesn't fit in code lines go here
-
-Development Process:
-
-* Modify DB column `password` in table `users` to `char 68` with script 05
-  * So that it exactly fits the encoding ID `{bcrypt}`(8) + the hash(60)
-  * FYI: BCrypt structure = `$[version]$[cost]$[salt][hash]`
+### Custom Security Table
+ We can use custom tables/columns instead of `users` and `authorities` and their default columns 
+#### Development Process:
+1. Drop default, old tables `users` and `authorities` manually 
+2. Run script 06 to create our custom replacements `members` and `roles`
+3. Configure Java code to tell Spring to look up tables `members` and `roles` 
+   * Otherwise, Spring will still use the default ones `users` and `authorities`
