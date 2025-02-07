@@ -2,7 +2,6 @@
 
 Development Process:
 
-* Set up SQL tables `users` and `authorities`(AKA`roles`) using script 04
-  * These 2 Tables and their column names are default to Spring  
-  * So is their relation   
-* Modify `UserDetails` generation method to read-credentials-from-db version 
+* Modify DB column `password` in table `users` to `char 68` with script 05
+  * So that it exactly fits the encoding ID `{bcrypt}`(8) + the hash(60)
+  * FYI: BCrypt structure = `$[version]$[cost]$[salt][hash]`
