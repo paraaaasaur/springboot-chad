@@ -20,7 +20,23 @@ public class DemoSecurityConfig {
 	// add support for JDBC instead of hardcoding credentials
 	@Bean
 	public UserDetailsManager userDetailsManager(DataSource dataSource) {
-		return new JdbcUserDetailsManager(dataSource);
+		JdbcUserDetailsManager judm = new JdbcUserDetailsManager(dataSource);
+
+		// Define SQL query string to retrieve a member by username
+		// (former term: user)
+		judm.setUsersByUsernameQuery(
+				"SELECT user_id, pw, active FROM members WHERE user_id=?"
+				// or "SELECT * FROM members WHERE user_id=?"
+		);
+
+		// Define SQL query string to retrieve the role by username
+		// (former term: authority)
+		judm.setAuthoritiesByUsernameQuery(
+				"SELECT user_id, role FROM roles WHERE user_id=?"
+				// or "SELECT * roles WHERE user_id=?"
+		);
+
+		return judm;
 	}
 
 	@Bean
