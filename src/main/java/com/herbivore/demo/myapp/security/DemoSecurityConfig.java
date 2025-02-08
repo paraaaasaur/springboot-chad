@@ -1,42 +1,38 @@
 package com.herbivore.demo.myapp.security;
 
+import com.herbivore.demo.myapp.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-
-import javax.sql.DataSource;
 
 @Configuration
 public class DemoSecurityConfig {
 
-	// add support for JDBC instead of hardcoding credentials
+	// (commented it because it malfunctions 🥺)
+	// bcrypt bean definition
+	// @Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	// authenticationProvider bean definition
 	@Bean
-	public UserDetailsManager userDetailsManager(DataSource dataSource) {
-		JdbcUserDetailsManager judm = new JdbcUserDetailsManager(dataSource);
-
-		// Define SQL query string to retrieve a member by username
-		// (former term: user)
-		judm.setUsersByUsernameQuery(
-				"SELECT user_id, pw, active FROM members WHERE user_id=?"
-				// or "SELECT * FROM members WHERE user_id=?"
-		);
-
-		// Define SQL query string to retrieve the role by username
-		// (former term: authority)
-		judm.setAuthoritiesByUsernameQuery(
-				"SELECT user_id, role FROM roles WHERE user_id=?"
-				// or "SELECT * roles WHERE user_id=?"
-		);
-
-		return judm;
+	public DaoAuthenticationProvider authenticationProvider(UserService userService) {
+		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+		// The reason we need UserService (which extends UserDetailsService)
+		auth.setUserDetailsService(userService);
+		// Set the password encoder as BCrypt
+		// (Not working as expected, so I commented it out)
+//		auth.setPasswordEncoder(passwordEncoder());
+		return auth;
 	}
 
 	@Bean
