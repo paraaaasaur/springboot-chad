@@ -1,12 +1,8 @@
-- Spring Boot searches the following directories for static resources in top-down fashion:
+You want to use `@{/path}` syntax in URLs. 
+* Context-relative URLs
+* Magic URL encoding issues
+* Easy switching between different environments
+* Simplified template maintenance
+  Overall, using `@{/path}` in Thymeleaf templates simplifies the generation of URLs, makes your templates more flexible, and helps ensure proper URL encoding and context-relative paths.
 
-  `src/main/resources`
-    1. `/META-INF/resources`
-    2. `/resources`
-    3. ⭐ `/static`
-        - In this case, js/css/html by convention can be put under
-            - js `src/main/resources/static/js`
-            - css `src/main/resources/static/css`
-                - bootstrap `src/main/resources/static/css/bootstrap.min.css`
-            - html `src/main/resources/static/html`
-    4. ⭐ `/public`
+${...} → Access model attributes
