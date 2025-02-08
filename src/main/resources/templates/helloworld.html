@@ -2,9 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Thymeleaf Demo</title>
+    <link rel="stylesheet" th:href="@{/css/demo4.css}" />
 </head>
 <body>
-    <b>"When is it, Dan?"</b>
-    <p th:text="'It\'s ' + ${serverTime} + '.'" />
+    <b class="moschops">"When is it, Dan?"</b>
+    <p class="moschops" th:text="'It\'s ' + ${serverTime} + '.'" />
 </body>
 </html>
