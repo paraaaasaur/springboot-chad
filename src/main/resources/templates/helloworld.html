@@ -2,10 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Thymeleaf Demo</title>
-    <link rel="stylesheet" th:href="@{/css/demo4.css}" />
 </head>
 <body>
-    <b class="moschops">"When is it, Dan?"</b>
-    <p class="moschops" th:text="'It\'s ' + ${serverTime} + '.'" />
+
+    <p>Hello World!</p>
+    <p th:text="'Student Name: ' + ${param.studentName}" />
+
 </body>
 </html>
