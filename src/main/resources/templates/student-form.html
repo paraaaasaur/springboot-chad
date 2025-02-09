@@ -21,6 +21,19 @@
                 -->
                 </select>
             </li>
+            <li> Favorite Programming Language: 
+                <input type="radio" th:each="tmpLang : ${languages}"
+                       th:text="${tmpLang}" th:value="${tmpLang}"
+                       th:field="*{favoriteLanguage}" />
+                <!-- Hardcoding
+                <input type="radio" th:field="*{favoriteLanguage}"
+                       th:text="Java" th:value="Java">
+                <input type="radio" th:field="*{favoriteLanguage}"
+                       th:text="Go" th:value="Go">
+                <input type="radio" th:field="*{favoriteLanguage}"
+                       th:text="Rest" th:value="Rest">
+               -->
+            </li>
         </ul>
 
         <button type="submit">PO⭐︎CHI</button>
