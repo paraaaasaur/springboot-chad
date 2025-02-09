@@ -20,20 +20,25 @@ public class StudentController {
 	@Value("${countries}")
 	private List<String> countries;
 
+	@Value("${languages}")
+	private Set<String> languages;
+
 	@GetMapping("/showStudentForm")
 	public String showForm(Model model) {
 		model.addAttribute("student", new Student("foo", "bar"));
 		Set<String> sortedCountries = new TreeSet<>(this.countries);
 		model.addAttribute("countries", sortedCountries);
+		model.addAttribute("languages", languages);
 		return "student-form";
 	}
 
 	@PostMapping("/processStudentForm")
 	public String processStudentForm(@ModelAttribute("student") Student student) {
-		System.out.printf(green("Student %s %s (%s) just registered\n"),
+		System.out.printf(green("Student %s %s (%s)(%s) just registered\n"),
 				student.getFirstName(),
 				student.getLastName(),
-				student.getCountry()
+				student.getCountry(),
+				student.getFavoriteLanguage()
 		);
 
 		return "student-confirmation";
