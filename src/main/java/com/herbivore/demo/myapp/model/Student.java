@@ -6,11 +6,18 @@ public class Student {
 
 	private String lastName;
 
+	private String country;
+
 	public Student() {}
 
 	public Student(String firstName, String lastName) {
+		this(firstName, lastName, "Greenland");
+	}
+
+	public Student(String firstName, String lastName, String country) {
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.country = country;
 	}
 
 	public String getFirstName() {
@@ -29,11 +36,20 @@ public class Student {
 		this.lastName = lastName;
 	}
 
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
 	@Override
 	public String toString() {
 		return "Student{" +
 			   "firstName='" + firstName + '\'' +
 			   ", lastName='" + lastName + '\'' +
+			   ", country='" + country + '\'' +
 			   '}';
 	}
 }

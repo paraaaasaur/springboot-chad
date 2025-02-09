@@ -1,7 +1,9 @@
-### Development Process
+# <select>/<option> In Thymeleaf
 
-1. Create Student.class to carry fields between view and controller 
-2. Add from-controller routing method to render form (GET /showStudentForm)
-3. Create view "student-form.html"
-4. Add to-controller routing method to display result (POST /processStudentForm)
-5. Create view "student-confirmation.html"
+## Reading Country List From property file
+1. Add a list of countries to _application.properties_
+2. Inject using `@Value` annotation
+3. Add the list of countries to the model and pass to the view
+
+## Notice
+* `hidden` in `<option>` is not a universal attribute on all browsers

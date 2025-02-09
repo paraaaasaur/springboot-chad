@@ -9,6 +9,18 @@
         <ul>
             <li>Firstname: <input type="text" th:field="*{firstName}" /></li>
             <li>Lastname: <input type="text" th:field="*{lastName}" /></li>
+            <li>
+                <select th:field="*{country}">
+                    <option th:each="tmpCountry : ${countries}"
+                            th:value="${tmpCountry}" th:text="${tmpCountry}"/>
+                <!-- Hardcoding
+                    <option th:value="Ireland">Ireland</option>
+                    <option th:value="Spain">Spain</option>
+                    <option th:value="Ukraine">Ukraine</option>
+                    <option th:value="Mongolia">Mongolia</option>
+                -->
+                </select>
+            </li>
         </ul>
 
         <button type="submit">PO⭐︎CHI</button>
