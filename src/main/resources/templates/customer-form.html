@@ -17,6 +17,11 @@
               th:errors="*{lastName}"
               class="errorStyle"></span>
         <br>
+        Free Pass: <input type="text" th:field="*{freePasses}" />
+        <span th:if="${#fields.hasErrors('freePasses')}"
+              th:errors="*{freePasses}"
+              class="errorStyle"></span>
+        <br>
         <button type="submit">Subscribe now!!!!!</button>
     </form>
 </body>

@@ -6,8 +6,8 @@
 </head>
 <body>
     <ul>
-        <li th:text="'Firstname:' + ${customer.firstName}" />
-        <li th:text="'Lastname:' + ${customer.lastName}" />
+        <li th:text="'Welcome, ' + ${customer.firstName} + ' ' + ${customer.lastName} + '!'" />
+        <li th:text="'You have ' + ${customer.freePasses} + ' free passes'" />
     </ul>
 </body>
 </html>
