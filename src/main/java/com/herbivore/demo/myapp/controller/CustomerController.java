@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Locale;
+
 @Controller
 public class CustomerController {
 
@@ -44,10 +46,12 @@ public class CustomerController {
 	@PostMapping("/processForm")
 	public String processForm(
 			@Valid @ModelAttribute("customer") Customer customer,
-			BindingResult bindingResult
+			BindingResult bindingResult,
+			Locale locale
 	) {
 		System.out.println(customer);
 		System.err.println(bindingResult);
+		System.out.println(locale);
 
 		return bindingResult.hasErrors()?
 				"customer-form" :
