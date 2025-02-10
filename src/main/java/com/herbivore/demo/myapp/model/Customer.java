@@ -11,7 +11,8 @@ public class Customer {
 	@Pattern(regexp = "\\p{Alpha}+", message = "alphabetical!")
 	private String lastName;
 
-	@NotNull(message = "is required")
+	@NotNull
+			(message = "is required (from annotation^_^)")
 	@Min(value = 0, message = "must >= 0")
 	@Max(value = 10, message = "must <= 10")
 	private Integer freePasses;
@@ -21,7 +22,7 @@ public class Customer {
 	private String postalCode;
 
 	public Customer() {
-		this("foo", "bar", 3, null);
+		this("foo", "bar", null, "30066");
 	}
 
 	public Customer(String firstName, String lastName, Integer freePasses, String postalCode) {
