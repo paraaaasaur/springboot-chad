@@ -1,4 +1,6 @@
-# ‼️ @NotNull On Primitive Type Of Field
+# Generic Error Message
 
-* Solution: Use wrapper class instead 
-  * Remember to refactor from field, setter, getter, all the way to constructor
+* _messages.properties_ is a special file, and Spring will recognize by this filename 
+  * ‼️ So don't name it randomly
+  * ‼️ Put it right under the _resources/_ directory
+  * 
