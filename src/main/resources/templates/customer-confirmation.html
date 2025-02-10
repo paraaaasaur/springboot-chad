@@ -8,6 +8,7 @@
     <ul>
         <li th:text="'Welcome, ' + ${customer.firstName} + ' ' + ${customer.lastName} + '!'" />
         <li th:text="'You have ' + ${customer.freePasses} + ' free passes'" />
+        <li th:text="'Your postal code: ' + ${customer.postalCode}" />
     </ul>
 </body>
 </html>

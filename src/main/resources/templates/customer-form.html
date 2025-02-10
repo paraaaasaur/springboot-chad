@@ -22,6 +22,14 @@
               th:errors="*{freePasses}"
               class="errorStyle"></span>
         <br>
+        Postal Code: <input type="text" th:field="*{postalCode}"
+                            pattern="[\w\d]{5}" required
+                            title="5 exact alphanumerical letters are required" />
+<!--                            />-->
+        <span th:if="${#fields.hasErrors('postalCode')}"
+              th:errors="*{postalCode}"
+              class="errorStyle"></span>
+        <br>
         <button type="submit">Subscribe now!!!!!</button>
     </form>
 </body>
