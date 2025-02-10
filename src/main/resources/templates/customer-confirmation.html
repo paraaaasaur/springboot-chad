@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Confirmation Page</title>
+</head>
+<body>
+    <ul>
+        <li th:text="'Firstname:' + ${customer.firstName}" />
+        <li th:text="'Lastname:' + ${customer.lastName}" />
+    </ul>
+</body>
+</html>
