@@ -1,5 +1,4 @@
-# Radio Input In Thymeleaf
+# Checkbox In Thymeleaf
 
-## How To Make a pre-checked radio?
-If the field matches th:value, Thymeleaf checks it out automatically.
-No extra process to add conditional logic for `checked`
+* Bug: Overriding `toString` will cause conversion error when using enum in `th:value`
+    * Even if it looks like you are using the enum const, it mistakenly calls `toString` anyway if overwritten
