@@ -1,5 +1,4 @@
-# Using Regex On Postal Code With @Pattern
+# ‼️ @NotNull On Primitive Type Of Field
 
-* Backend: `@Pattern` + `@NotNull`(optional)
-* Frontend: `<input required pattern="[\w\d]{5}" 
-title="5 exact alphanumerical letters are required"  />`
+* Solution: Use wrapper class instead 
+  * Remember to refactor from field, setter, getter, all the way to constructor
