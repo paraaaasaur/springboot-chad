@@ -11,9 +11,10 @@ public class Customer {
 	@Pattern(regexp = "\\p{Alpha}+", message = "alphabetical!")
 	private String lastName;
 
+	@NotNull(message = "is required")
 	@Min(value = 0, message = "must >= 0")
 	@Max(value = 10, message = "must <= 10")
-	private int freePasses;
+	private Integer freePasses;
 
 	@NotNull(message = "is required")
 	@Pattern(regexp = "\\p{Alnum}{5}", message = "5 alphabetic/numbers")
@@ -23,7 +24,7 @@ public class Customer {
 		this("foo", "bar", 3, null);
 	}
 
-	public Customer(String firstName, String lastName, int freePasses, String postalCode) {
+	public Customer(String firstName, String lastName, Integer freePasses, String postalCode) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.freePasses = freePasses;
@@ -36,8 +37,8 @@ public class Customer {
 	public String getLastName() {return lastName;}
 	public void setLastName(String lastName) {this.lastName = lastName;}
 
-	public int getFreePasses() {return freePasses;}
-	public void setFreePasses(int freePasses) {this.freePasses = freePasses;}
+	public Integer getFreePasses() {return freePasses;}
+	public void setFreePasses(Integer freePasses) {this.freePasses = freePasses;}
 
 	public String getPostalCode() {return postalCode;}
 	public void setPostalCode(String postalCode) {this.postalCode = postalCode;}
