@@ -21,7 +21,7 @@
                 -->
                 </select>
             </li>
-            <li> Favorite Programming Language: 
+            <li> Favorite Programming Language:
                 <input type="radio" th:each="tmpLang : ${languages}"
                        th:text="${tmpLang}" th:value="${tmpLang}"
                        th:field="*{favoriteLanguage}" />
@@ -33,6 +33,11 @@
                 <input type="radio" th:field="*{favoriteLanguage}"
                        th:text="Rest" th:value="Rest">
                -->
+            </li>
+            <li> Favorite Operating System:
+                <input type="checkbox" th:each="os : ${systems}"
+                       th:value="${os}" th:text="${os.label}"
+                       th:field="*{favoriteSystems}"/>
             </li>
         </ul>
 
