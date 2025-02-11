@@ -8,6 +8,7 @@
     <title>Customer Registration Page</title>
 </head>
 <body>
+    <h1 th:text="#{greetings}" />
     <form th:action="@{/processForm}" method="POST" th:object="${customer}">
         Firstname: <input type="text" th:field="*{firstName}" />
         <br>
