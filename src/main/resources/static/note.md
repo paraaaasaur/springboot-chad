@@ -1,3 +1,7 @@
-# Thymeleaf `#{}` Syntax 
+# Setup
 
-* `#{aaa.bbb}` grabs value from key `aaa.bbb` from messages.properties
+* Make sure I have:
+  * Should have vanilla employees table setup
+  * JDBC relevant configs in application.properties
+  * dao + entity + rest controller + service/impl
+  * pom.xml
