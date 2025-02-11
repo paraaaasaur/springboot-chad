@@ -1,7 +1,13 @@
 package com.herbivore.demo.myapp.model;
 
+import com.herbivore.demo.myapp.validation.CourseCode;
+import jakarta.validation.GroupSequence;
 import jakarta.validation.constraints.*;
 
+interface MajorGroup {}
+interface MinorGroup {}
+
+@GroupSequence({MajorGroup.class, MinorGroup.class, Customer.class})
 public class Customer {
 
 	private String firstName;
@@ -21,15 +27,21 @@ public class Customer {
 	@Pattern(regexp = "\\p{Alnum}{5}", message = "5 alphabetic/numbers")
 	private String postalCode;
 
+	@NotNull(groups = {MajorGroup.class})
+	@CourseCode(groups = {MinorGroup.class})
+	private String courseCode;
+
 	public Customer() {
-		this("foo", "bar", null, "30066");
+		this("foo", "bar", 0b0111,
+				"30066", "TUNA0721");
 	}
 
-	public Customer(String firstName, String lastName, Integer freePasses, String postalCode) {
+	public Customer(String firstName, String lastName, Integer freePasses, String postalCode, String courseCode) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.freePasses = freePasses;
 		this.postalCode = postalCode;
+		this.courseCode = courseCode;
 	}
 
 	public String getFirstName() {return firstName;}
@@ -44,6 +56,9 @@ public class Customer {
 	public String getPostalCode() {return postalCode;}
 	public void setPostalCode(String postalCode) {this.postalCode = postalCode;}
 
+	public String getCourseCode() {return courseCode;}
+	public void setCourseCode(String courseCode) {this.courseCode = courseCode;}
+
 	@Override
 	public String toString() {
 		return "Customer{" +
@@ -51,6 +66,7 @@ public class Customer {
 			   ", lastName='" + lastName + '\'' +
 			   ", freePasses=" + freePasses +
 			   ", postalCode='" + postalCode + '\'' +
+			   ", courseCode='" + courseCode + '\'' +
 			   '}';
 	}
 }
