@@ -30,6 +30,11 @@
               th:errors="*{postalCode}"
               class="errorStyle"></span>
         <br>
+        Course Code: <input type="text" th:field="*{courseCode}" />
+        <span th:if="${#fields.hasErrors('courseCode')}"
+              th:errors="*{courseCode}"
+              class="errorStyle"></span>
+        <br>
         <button type="submit">Subscribe now!!!!!</button>
     </form>
 </body>
