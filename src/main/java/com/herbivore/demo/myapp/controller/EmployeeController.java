@@ -38,7 +38,8 @@ public class EmployeeController {
 	public String listEmployees(Model model) {
 		List<Employee> employees = employeeService.findAllByOrderByLastNameAsc();
 		model.addAttribute("employees", employees);
-
+		//TODO
+		model.addAttribute("blankEmp", new Employee());
 		return "employees/list-employees";
 	}
 
@@ -65,5 +66,44 @@ public class EmployeeController {
 		System.out.println(cyan("> Saved " + saved));
 
 		return "redirect:list";
+	}
+
+	@GetMapping("/edit/{id}")
+	public String editEmployee(
+			@PathVariable int id,
+			Model model
+	) {
+		Employee foundEmp = employeeService.findById(id);
+		model.addAttribute("employee", foundEmp);
+		return "employees/edit-employee-form";
+	}
+
+	/**
+	 * This method is a duplicate of add version
+	 * and the route should have been named "save"
+	 * so that both INSERT and UPDATE fit, but it's
+	 * fine because why not ( ^)o(^ )
+	 **/
+	@PostMapping("/edit")
+	public String editEmployee(
+			String uselessRoadBlockLUL,
+			@Valid @ModelAttribute("employee") Employee employee,
+			// BindingResult should go right after @Valid for Spring
+			// to use reflection to invoke binding correctly
+//			String uselessRoadBlockLUL,
+			BindingResult bindingResult
+	) {
+		System.out.println(employee);
+		System.err.println(bindingResult);
+
+		if (bindingResult.hasErrors()) {
+			return "employees/edit-employee-form";
+		}
+
+		// ‼️ JPA CRUD also fails if the validation fails in the first place
+		Employee updated = employeeService.save(employee);
+		System.out.println(cyan("> Updated " + updated));
+
+		return "redirect:/employees/list";
 	}
 }
