@@ -17,9 +17,16 @@
         <p class="h4 mb-4">Save Employee</p>
         <form th:action="@{/employees/add}" th:method="POST" th:object="${employee}">
             <input th:field="*{firstName}" class="form-control mb-4 w-25" placeholder="First Name" />
+            <span th:if="${#fields.hasErrors('lastName')}"
+                  th:errors="*{lastName}"
+                  class="text-danger"></span>
+            <br>
             <input th:field="*{lastName}" class="form-control mb-4 w-25" placeholder="Last Name" />
+            <span th:if="${#fields.hasErrors('email')}"
+                  th:errors="*{email}"
+                  class="text-danger"></span>
+            <br>
             <input th:field="*{email}" class="form-control mb-4 w-25" placeholder="Email" />
-
             <button class="btn btn-info col-2" type="submit">ポッチ♡</button>
         </form>
         <hr>
