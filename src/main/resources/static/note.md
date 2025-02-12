@@ -1,18 +1,17 @@
-# [C]rud: Add Employee
+# EXTRA: Validation 
 
-## 1. Scheme
-* list-employees.html: onclick 
-* --(GET /employees/add)--> 
-* add-employee-form.html: onsubmit
-* --(POST /employees/add ... INSERT logic ... redirect)-->
-* list-employees.html
-
-## 2. Bootstrap Styling
-* Button style (‼️ works for everything: button, a, input): 
-  * `btn btn-success btn-md mb-3`
-  * `btn btn-info col-2`
-* Form input: `form-control mb-4 w-25`
-
-## 3. Spring Data JPA Custom Method (to Sort By lastName)
-* Create a method on the repository & follow the IDE naming hint, and then it shall implement a query based on that naming
-* `List<Employee> findAllByOrderByLastNameAsc();`
+* ‼️ JPA CRUD also fails if the validation fails in the first place, so the following doesn't work:
+```java
+	@PostMapping("/add")
+	public String addEmployee(
+			@Valid @ModelAttribute("employee") Employee employee,
+			BindingResult bindingResult
+	) {
+	    // works when Spring validation is okay
+        // throws exceptions when Spring validation fails
+	    employeeService.save(employee);
+		return bindingResult.hasErrors()? 
+				"employees/add-employee-form" :
+				"redirect:list";
+	}
+```
