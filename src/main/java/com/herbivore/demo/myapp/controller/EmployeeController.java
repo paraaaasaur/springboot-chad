@@ -106,4 +106,12 @@ public class EmployeeController {
 
 		return "redirect:/employees/list";
 	}
+
+	@DeleteMapping("/delete")
+	public String deleteEmployee(@RequestParam("id") int id) {
+		System.out.println(cyan("> Deleting Employee id = " + id));
+		employeeService.deleteById(id);
+
+		return "redirect:/employees/list";
+	}
 }
