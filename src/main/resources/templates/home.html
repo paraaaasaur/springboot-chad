@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <title>Herbivore's Home Page</title>
@@ -24,6 +25,16 @@
     <h2>Herbivore's Home Page</h2>
     <hr>
     <p>Such tree many grass ( ^)o(^ )</p>
+
+    <hr>
+        <div class="bg-warning col-3">
+            User: <b sec:authentication="principal.username"></b>
+        </div>
+        <div class="bg-info col-3">
+            Role(s): <b sec:authentication="principal.authorities"></b>
+        </div>
+    <hr>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
