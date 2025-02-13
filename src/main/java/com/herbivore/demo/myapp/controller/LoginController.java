@@ -12,9 +12,15 @@ public class LoginController {
 		return "fancy-login";
 	}
 
-	// Implemented by Spring Boot
-//	@PostMapping("/authenticateTheUser")
-//	public String authenticateTheUser() {}
+	@GetMapping("/leaders")
+	public String showLeaders() {
+		return "leaders";
+	}
+
+	@GetMapping("/systems")
+	public String showSystems() {
+		return "systems";
+	}
 
 
 }
