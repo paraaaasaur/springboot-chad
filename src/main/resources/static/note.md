@@ -1,6 +1,6 @@
-# cru[D]: Deleting Employee
+# CH8: Sprig MVC Security Setup
 
-* DELETE request in Spring Boot requires: 
-  * Payload contains `_method=DELETE`
-  * _application.properties_: `spring.mvc.hiddenmethod.filter.enabled=true`
-  * `@DeleteMapping` method
+## Dependency
+
+* Notice that artifact `thymeleaf-extras-springsecurity6` is also included 
+when you select both `Thymeleaf` and `Spring Security` in Spring Initializr
