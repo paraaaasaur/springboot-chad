@@ -22,5 +22,10 @@ public class LoginController {
 		return "systems";
 	}
 
+	@GetMapping("/access-denied-banana")
+	public String showAccessDeniedPasta() {
+		return "access-denied";
+	}
+
 
 }
