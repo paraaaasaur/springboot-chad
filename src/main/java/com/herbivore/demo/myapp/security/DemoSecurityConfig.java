@@ -58,6 +58,11 @@ public class DemoSecurityConfig {
 		// logout support
 		http.logout(LogoutConfigurer::permitAll);
 
+		// exception handling
+		http.exceptionHandling(configurer -> configurer
+				.accessDeniedPage("/access-denied-banana")
+		);
+
 		return http.build();
 	}
 }
