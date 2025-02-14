@@ -7,33 +7,20 @@ import org.springframework.security.config.annotation.web.configurers.LogoutConf
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class DemoSecurityConfig {
 
+	// add support for instead of hardcoding credentials
 	@Bean
-	public InMemoryUserDetailsManager userDetailsManager() {
-
-		UserDetails akutan = User.builder()
-				.username("akutan")
-				.password("{noop}athc")
-				.roles("EMPLOYEE")
-				.build();
-
-		UserDetails takuan = User.builder()
-				.username("takuan")
-				.password("{noop}majidesaa")
-				.roles("EMPLOYEE", "MANAGER")
-				.build();
-
-		UserDetails toyota = User.builder()
-				.username("toyota")
-				.password("{noop}!?!?!?")
-				.roles("EMPLOYEE", "MANAGER", "ADMIN")
-				.build();
-
-		return new InMemoryUserDetailsManager(akutan, takuan, toyota);
+	public UserDetailsManager userDetailsManager(DataSource dataSource) {
+		// tell Spring Security to JDBC authentication with our database
+		return new JdbcUserDetailsManager(dataSource);
 	}
 
 	@Bean
@@ -64,5 +51,33 @@ public class DemoSecurityConfig {
 		);
 
 		return http.build();
+	}
+
+
+	private class Archived {
+		// @Bean
+		@Deprecated(since = "Hardcoding era is over :-)")
+		public InMemoryUserDetailsManager userDetailsManager() {
+
+			UserDetails akutan = User.builder()
+					.username("akutan")
+					.password("{noop}athc")
+					.roles("EMPLOYEE")
+					.build();
+
+			UserDetails takuan = User.builder()
+					.username("takuan")
+					.password("{noop}majidesaa")
+					.roles("EMPLOYEE", "MANAGER")
+					.build();
+
+			UserDetails toyota = User.builder()
+					.username("toyota")
+					.password("{noop}!?!?!?")
+					.roles("EMPLOYEE", "MANAGER", "ADMIN")
+					.build();
+
+			return new InMemoryUserDetailsManager(akutan, takuan, toyota);
+		}
 	}
 }
