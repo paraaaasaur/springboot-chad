@@ -19,8 +19,18 @@ public class DemoSecurityConfig {
 	// add support for instead of hardcoding credentials
 	@Bean
 	public UserDetailsManager userDetailsManager(DataSource dataSource) {
+
 		// tell Spring Security to JDBC authentication with our database
-		return new JdbcUserDetailsManager(dataSource);
+		var judm = new JdbcUserDetailsManager(dataSource);
+		String[] queries = {
+				"SELECT user_id,pw,active FROM members WHERE user_id=?",
+				"SELECT user_id,role FROM roles WHERE user_id=?"
+		};
+
+		judm.setUsersByUsernameQuery(queries[0]);
+		judm.setAuthoritiesByUsernameQuery(queries[1]);
+
+		return judm;
 	}
 
 	@Bean
