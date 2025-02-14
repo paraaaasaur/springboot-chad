@@ -36,12 +36,12 @@
     <hr>
 
     <!-- link only available to MANAGERs -->
-    <p>
+    <p sec:authorize="hasRole('MANAGER')">
         <a th:href="@{/leaders}">Leadership Meeting</a>
         (Requires MANAGER role)
     </p>
     <!-- link only available to ADMINs -->
-    <p>
+    <p sec:authorize="hasRole('ADMIN')">
         <a th:href="@{/systems}">IT Systems Meeting</a>
         (Requires ADMIN role)
     </p>
