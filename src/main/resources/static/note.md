@@ -1,3 +1,3 @@
-# EXTRA: Spring MVC Security + Custom Tables with JPA/Hibernate
+# EXTRA: Spring MVC Security - User Registration On View
 
 (skipped)
