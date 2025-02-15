@@ -1,25 +1,38 @@
-# CH9 Advanced JPA(ORM) Mapping: Setup
+# @OneToOne: Uni-directional
 
-## Foundational Concepts
+## Development Process
 
-* JPA(ORM) Relationships Concepts
-  1. one-to-one(instructors <-- instructor_details)
-  2. one-to-many(carts <-- items)
-  3. many-to-many(students <--> courses)
-* PK, FK
-* Cascading: Apply the same operation to related entities
-  * Cascade Delete: 
-    * ✅ Intuitive on `one-to-one` or `one-to-many`
-    * ⚠️ Caution with `many-to-many`:
-      * Problem: Deleting a student shouldn't delete their courses!
-      * Solution: First define your goal, then express it in SQL.
-       > Example: "I want to delete a course only if no students are enrolled."
+1. Define database tables
+   * ch08-create-db.sql
+   * 
+2. Create corresponding entities `InstructorDetail` and `Instructor`
+   * Prepare POJO + must include no-arg constructor
+   * `@Entity` `@Table` `@Column`
+   * `@JoinColumn` `@OneToOne`
+   * `@Repository` `@Transactional`
+3. Create main app using `CommandLineRunner`
 
-* Fetch Types: Want to retrieve all related data from related tables in one shot? 
-    * EAGER: Yes
-    * LAZY: Nope until requested otherwise
-* Uni-/Bi-directional Relationship
-  * Uni: `Instructor` has a reference to `InstructorDetail`, but not vice versa 
-  * Bi: Both `Instructor` and `InstructorDetail` reference each other directly, allowing mutual access.
+## More On The Purpose Foreign Key
 
-# `@OneToOne` Relationship
+* To preserve relationship between tables 
+  * AKA Referential Integrity
+* To prevent operations that would destroy relationship
+* Ensures only valid data can be inserted into the FK column
+  * Can only contain valid reference to PK in other tables
+
+## Entity Lifecycle
+
+* States: New/Transient, Persistent/Managed, Detached, Removed
+* Common Actions: Detach, merge, persist, remove, refresh...
+
+## Cascade Type
+
+* When the entity is <action>, the related entity also get <action>
+* By default, there is no cascade type
+* PERSIST, REMOVE, REFRESH, DETACH, MERGE, ALL
+
+## Notice
+
+* Because of cascading setting, inserting `instructor` also inserts `instructor_detail` 
+* `instructor_detail` table gets inserted first
+* `@Transactional` should have put on `@Service` layer
