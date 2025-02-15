@@ -30,7 +30,9 @@ public class MyappApplication {
 	@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 	public CommandLineRunner commandLineRunner(String[] args) {
 		return runner -> {
-			createInstructor(appDAO);
+//			createInstructor(appDAO);
+
+			findInstructor(appDAO, 1);
 		};
 	}
 
@@ -44,6 +46,14 @@ public class MyappApplication {
 		appDAO.save(instructor);
 
 		System.out.println(cyan("( ^)o(^ )"));
+	}
+
+	private void findInstructor(AppDAO appDAO, int id) {
+		System.out.println("> Finding instructor with id = " + id + "...");
+		Instructor instructor = appDAO.findInstructorById(id);
+
+		System.out.println(cyan("> Found Instructor = " + instructor));
+		System.out.println(cyan("> The associated InstructorDetail = " + instructor.getInstructorDetail()));
 	}
 
 	@PostConstruct
