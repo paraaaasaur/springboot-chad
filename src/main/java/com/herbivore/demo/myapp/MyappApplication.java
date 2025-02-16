@@ -32,7 +32,11 @@ public class MyappApplication {
 		return runner -> {
 //			createInstructor(appDAO);
 
-			findInstructor(appDAO, 1);
+//			findInstructor(appDAO, 0);
+
+			updateInstructor();
+
+			deleteInstructor(appDAO, 0);
 		};
 	}
 
@@ -54,6 +58,26 @@ public class MyappApplication {
 
 		System.out.println(cyan("> Found Instructor = " + instructor));
 		System.out.println(cyan("> The associated InstructorDetail = " + instructor.getInstructorDetail()));
+	}
+
+	private void updateInstructor() {
+		Instructor i2 = appDAO.findInstructorById(2);
+		i2.setFirstName("foo");
+		i2.setLastName("bar");
+		InstructorDetail id2 = i2.getInstructorDetail();
+		id2.setHobby("play ball with cow");
+		id2.setYoutubeChannel("https://www.youtube.com/@RMVideos_Jukin");
+		appDAO.updateInstructor(i2);
+
+		hl();
+	}
+
+	private void deleteInstructor(AppDAO appDAO, int id) {
+		System.out.println(cyan("> Deleting instructor with id = " + id));
+
+		appDAO.deleteInstructorById(id);
+
+		hl();
 	}
 
 	@PostConstruct
