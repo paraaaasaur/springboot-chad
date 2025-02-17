@@ -19,6 +19,10 @@ public class InstructorDetail {
 	@Column(name = "hobby")
 	private String hobby;
 
+	// TODO: Fill in appropriate annotation(s) here!
+	// cascade type? mapping? fetch? ...
+	private Instructor instructor;
+
 	public InstructorDetail() {}
 
 	public InstructorDetail(String youtubeChannel, String hobby) {
@@ -34,6 +38,10 @@ public class InstructorDetail {
 
 	public String getHobby() {return hobby;}
 	public void setHobby(String hobby) {this.hobby = hobby;}
+
+	// TODO: try protected setter
+	public Instructor getInstructor() {return instructor;}
+	public void setInstructor(Instructor instructor) {this.instructor = instructor;}
 
 	@Override
 	public String toString() {
