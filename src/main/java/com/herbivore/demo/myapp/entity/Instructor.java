@@ -2,7 +2,6 @@ package com.herbivore.demo.myapp.entity;
 
 import jakarta.persistence.*;
 
-import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -23,13 +22,8 @@ public class Instructor {
 	@Column(name = "email")
 	private String email;
 
-	// related entity
-	@OneToOne(cascade = {PERSIST, MERGE, DETACH, REFRESH, REMOVE})
-		// When you persist an Instructor, you also persist an InstructorDetail
-		// When you remove an Instructor, you also remove an InstructorDetail
-		// ...and so on
-		// By default not vice versa
-	@JoinColumn(name = "instructor_detail_id")
+	// TODO: Fill in appropriate annotation(s) here!
+	// cascade type? mapping? fetch? ...
 	private InstructorDetail instructorDetail;
 
 	public Instructor() {}
@@ -38,6 +32,14 @@ public class Instructor {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+	}
+
+	public void addDetail(InstructorDetail instructorDetail) {
+		// TODO
+	}
+
+	public void removeDetail() {
+		// TODO
 	}
 
 	public int getId() {return id;}

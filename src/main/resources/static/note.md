@@ -1,10 +1,10 @@
-# @OneToOne: Uni-directional, UPDATE + DELETE
+# EXTRA: Refactoring For Logical Schema
 
-
-
-
-
-
+* Refactor database schema (use ch08-my-version)
+  * Now FK goes to `instructor_detail` side
+  * No cascading and null-proof (left for JPA learning purpose)
+* Refactor the association part in `Instructor` & `InstructorDetail` Entity to bidirectional @OneToOne
+* Update config: `spring.datasource.url=jdbc:mysql://localhost:3306/hb-02-one-to-one-bi`
 
 ======================================================================
 ## How do you know an entity's state? (Thank you da guru gpt✨)
