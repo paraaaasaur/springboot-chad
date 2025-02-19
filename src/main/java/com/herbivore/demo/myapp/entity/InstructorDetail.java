@@ -20,19 +20,18 @@ public class InstructorDetail {
 	private String hobby;
 
 	@OneToOne
-	// Redundant: Presumed FK name = fieldName + "_id"
-//	@JoinColumn(name = "instructor_id")
+	@JoinColumn(name = "instructor_id")
 	private Instructor instructor;
 
-	public InstructorDetail() {}
+	protected InstructorDetail() {}
 
 	public InstructorDetail(String youtubeChannel, String hobby) {
 		this.youtubeChannel = youtubeChannel;
 		this.hobby = hobby;
 	}
 
-	public void dissociate() {
-		instructor.dissociate();
+	public void dissociateInstructor() {
+		instructor.dissociateDetail();
 	}
 
 	public int getId() {return id;}
@@ -52,7 +51,7 @@ public class InstructorDetail {
 
 	@Override
 	public String toString() {
-		return "InstructorDetail(" + instructor.hashCode() + "){" +
+		return "InstructorDetail(" + (instructor == null? "" : instructor.hashCode()) + "){" +
 			   "id=" + id +
 			   ", youtubeChannel='" + youtubeChannel + '\'' +
 			   ", hobby='" + hobby + '\'' +
