@@ -2,6 +2,11 @@ package com.herbivore.demo.myapp.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
 import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -24,13 +29,19 @@ public class Instructor {
 	private String email;
 
 	@OneToOne(
-			cascade = {PERSIST},
+			cascade = {PERSIST, REMOVE},
 //			orphanRemoval = true,
 			mappedBy = "instructor"
 	)
 	private InstructorDetail instructorDetail;
 
-	public Instructor() {}
+	@OneToMany(
+			cascade = {PERSIST, MERGE, REFRESH, DETACH},
+			mappedBy = "instructor"
+	)
+	private Set<Course> courses = new HashSet<>();
+
+	protected Instructor() {}
 
 	public Instructor(String firstName, String lastName, String email) {
 		this.firstName = firstName;
@@ -45,12 +56,37 @@ public class Instructor {
 		instructorDetail.setInstructor(this);
 	}
 
-	public void dissociate() {
+	public void associate(Course... courses) {
+		for (var course : courses) {
+			this.courses.add(course);
+			course.setInstructor(this);
+		}
+	}
+
+	public void dissociateDetail() {
 		if (instructorDetail != null) {
 			instructorDetail.setInstructor(null);
 		}
 		this.setInstructorDetail(null);
 	}
+
+	public void dissociateCourses(Course... courses) {
+		Arrays.stream(courses)
+				.filter(Objects::nonNull)
+				.forEach(course -> {
+					course.setInstructor(null);
+					this.courses.remove(course);
+				});
+	}
+
+	public void dissociateAllCourses() {
+		courses.remove(null);
+		courses.forEach(course -> {
+			course.setInstructor(null);
+			courses.remove(course);
+		});
+	}
+
 
 	public int getId() {return id;}
 	// FIXME: Potential bug using protected setter
@@ -70,14 +106,20 @@ public class Instructor {
 	//  - Testing for protected setter to force using convenience method
 	protected void setInstructorDetail(InstructorDetail instructorDetail) {this.instructorDetail = instructorDetail;}
 
+	public Set<Course> getCourses() {return courses;}
+	protected void setCourses(Set<Course> courses) {this.courses = courses;}
+
 	@Override
 	public String toString() {
+		String detailString = instructorDetail == null? "(No InstructorDetail)" : instructorDetail.toString();
+		String coursesString = String.join("\n\t- ", courses.stream().map(Course::toString).toArray(String[]::new));
 		return "Instructor(" + hashCode() + "){" +
 			   "id=" + id +
 			   ", firstName='" + firstName + '\'' +
 			   ", lastName='" + lastName + '\'' +
 			   ", email='" + email + '\'' +
-			   ", \n- " + instructorDetail +
+			   ", \n- " + detailString +
+			   ", \n- courses: \n\t- " + coursesString +
 			   '}';
 	}
 }

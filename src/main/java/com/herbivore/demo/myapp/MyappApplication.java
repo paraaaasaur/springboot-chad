@@ -2,6 +2,7 @@ package com.herbivore.demo.myapp;
 
 
 import com.herbivore.demo.myapp.dao.AppDAO;
+import com.herbivore.demo.myapp.entity.Course;
 import com.herbivore.demo.myapp.entity.Instructor;
 import com.herbivore.demo.myapp.entity.InstructorDetail;
 import jakarta.annotation.PostConstruct;
@@ -32,7 +33,7 @@ public class MyappApplication {
 	@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 	public CommandLineRunner commandLineRunner(String[] args) {
 		return runner -> {
-			createInstructor(appDAO);
+//			createInstructor(appDAO);
 
 //			findInstructor(appDAO, 3);
 
@@ -45,6 +46,8 @@ public class MyappApplication {
 //			updateDetail(appDAO, 27);
 
 //			deleteDetail(appDAO, 31);
+
+			createInstructorWithCourses(appDAO);
 		};
 	}
 
@@ -114,6 +117,25 @@ public class MyappApplication {
 		System.out.println(cyan("> Deleting instructor + details of id = " + id));
 
 		appDAO.deleteInstructorDetailById(id);
+		aqtn();
+	}
+
+	private void createInstructorWithCourses(AppDAO appDAO) {
+		System.out.println(cyan("> Creating Instructor (and Courses)"));
+
+		var instructor = new Instructor("Loren", "Pepper", "owl-life@gmail.com");
+
+		instructor.associate(
+			new Course("200 Hours Yoga Teacher Training - Part 1 (Yoga Alliance)"),
+			new Course("The No. 1 Breathwork & Meditation course | \"Breath is Life\""),
+			new Course("Learn to Play the Flute: Beginner Basics to Intermediate"),
+			new Course("Complete Indonesian Course: Learn Indonesian for Beginners"),
+			new Course("Eat Real Food: How to Eat a Whole Food, Plant-Based Diet")
+		);
+
+		System.out.println(instructor);
+
+		appDAO.saveInstructor(instructor);
 		aqtn();
 	}
 

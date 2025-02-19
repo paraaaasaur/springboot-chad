@@ -41,7 +41,7 @@ public class AppDAOImpl implements AppDAO {
 //		found.removeDetail();
 //		found.setInstructorDetail(null);
 //		found.getInstructorDetail().setInstructor(null);
-		found.dissociate();
+		found.dissociateDetail();
 //		entityManager.detach(found.getInstructorDetail());
 //		entityManager.remove(found);
 	}
@@ -61,9 +61,7 @@ public class AppDAOImpl implements AppDAO {
 	@Override
 	public void deleteInstructorDetailById(int id) {
 		InstructorDetail foundDetail = entityManager.find(InstructorDetail.class, id);
-		foundDetail.dissociate();
-//		foundDetail.setInstructor(null);
-//		foundDetail.getInstructor().setInstructorDetail(null);
+		foundDetail.dissociateInstructor();
 		entityManager.remove(foundDetail);
 	}
 
