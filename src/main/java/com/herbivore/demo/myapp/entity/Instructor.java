@@ -2,6 +2,7 @@ package com.herbivore.demo.myapp.entity;
 
 import jakarta.persistence.*;
 
+import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
@@ -22,8 +23,11 @@ public class Instructor {
 	@Column(name = "email")
 	private String email;
 
-	// TODO: Fill in appropriate annotation(s) here!
-	// cascade type? mapping? fetch? ...
+	@OneToOne(
+			cascade = {PERSIST},
+//			orphanRemoval = true,
+			mappedBy = "instructor"
+	)
 	private InstructorDetail instructorDetail;
 
 	public Instructor() {}
@@ -34,16 +38,23 @@ public class Instructor {
 		this.email = email;
 	}
 
-	public void addDetail(InstructorDetail instructorDetail) {
-		// TODO
+	/** <h3>Use me to bind referenced & dependent tables together
+	 * in a bidirectional {@link OneToOne} mapping!</h3>*/
+	public void associate(InstructorDetail instructorDetail) {
+		this.setInstructorDetail(instructorDetail);
+		instructorDetail.setInstructor(this);
 	}
 
-	public void removeDetail() {
-		// TODO
+	public void dissociate() {
+		if (instructorDetail != null) {
+			instructorDetail.setInstructor(null);
+		}
+		this.setInstructorDetail(null);
 	}
 
 	public int getId() {return id;}
-	public void setId(int id) {this.id = id;}
+	// FIXME: Potential bug using protected setter
+	protected void setId(int id) {this.id = id;}
 
 	public String getFirstName() {return firstName;}
 	public void setFirstName(String firstName) {this.firstName = firstName;}
@@ -55,16 +66,18 @@ public class Instructor {
 	public void setEmail(String email) {this.email = email;}
 
 	public InstructorDetail getInstructorDetail() {return instructorDetail;}
-	public void setInstructorDetail(InstructorDetail instructorDetail) {this.instructorDetail = instructorDetail;}
+	// FIXME: Potential bug
+	//  - Testing for protected setter to force using convenience method
+	protected void setInstructorDetail(InstructorDetail instructorDetail) {this.instructorDetail = instructorDetail;}
 
 	@Override
 	public String toString() {
-		return "Instructor{" +
+		return "Instructor(" + hashCode() + "){" +
 			   "id=" + id +
 			   ", firstName='" + firstName + '\'' +
 			   ", lastName='" + lastName + '\'' +
 			   ", email='" + email + '\'' +
-			   ", instructorDetail=" + instructorDetail +
+			   ", \n- " + instructorDetail +
 			   '}';
 	}
 }
