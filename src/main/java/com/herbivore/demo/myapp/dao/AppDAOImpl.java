@@ -1,6 +1,7 @@
 package com.herbivore.demo.myapp.dao;
 
 import com.herbivore.demo.myapp.entity.Instructor;
+import com.herbivore.demo.myapp.entity.InstructorDetail;
 import jakarta.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,9 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class AppDAOImpl implements AppDAO {
 
-	// Hibernate-specific persistence context. Supports second-level caching.
-//	private Session session;
-	// JPA persistence context, a more general one
 	private EntityManager entityManager;
 
 	public AppDAOImpl(EntityManager entityManager) {
@@ -19,7 +17,7 @@ public class AppDAOImpl implements AppDAO {
 
 	@Transactional
 	@Override
-	public void save(Instructor instructor) {
+	public void saveInstructor(Instructor instructor) {
 //		session.persist(instructor);
 		entityManager.persist(instructor);
 	}
@@ -39,6 +37,35 @@ public class AppDAOImpl implements AppDAO {
 	@Override
 	public void deleteInstructorById(int id) {
 		Instructor found = entityManager.find(Instructor.class, id);
-		entityManager.remove(found);
+
+//		found.removeDetail();
+//		found.setInstructorDetail(null);
+//		found.getInstructorDetail().setInstructor(null);
+		found.dissociate();
+//		entityManager.detach(found.getInstructorDetail());
+//		entityManager.remove(found);
 	}
+
+	@Override
+	public InstructorDetail findInstructorDetailById(int id) {
+		return entityManager.find(InstructorDetail.class, id);
+	}
+
+	@Transactional
+	@Override
+	public void updateInstructorDetail(InstructorDetail instructorDetail) {
+		entityManager.merge(instructorDetail);
+	}
+
+	@Transactional
+	@Override
+	public void deleteInstructorDetailById(int id) {
+		InstructorDetail foundDetail = entityManager.find(InstructorDetail.class, id);
+		foundDetail.dissociate();
+//		foundDetail.setInstructor(null);
+//		foundDetail.getInstructor().setInstructorDetail(null);
+		entityManager.remove(foundDetail);
+	}
+
+
 }

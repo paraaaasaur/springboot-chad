@@ -19,8 +19,9 @@ public class InstructorDetail {
 	@Column(name = "hobby")
 	private String hobby;
 
-	// TODO: Fill in appropriate annotation(s) here!
-	// cascade type? mapping? fetch? ...
+	@OneToOne
+	// Redundant: Presumed FK name = fieldName + "_id"
+//	@JoinColumn(name = "instructor_id")
 	private Instructor instructor;
 
 	public InstructorDetail() {}
@@ -30,8 +31,13 @@ public class InstructorDetail {
 		this.hobby = hobby;
 	}
 
+	public void dissociate() {
+		instructor.dissociate();
+	}
+
 	public int getId() {return id;}
-	public void setId(int id) {this.id = id;}
+	// FIXME: Potential bug using protected setter
+	protected void setId(int id) {this.id = id;}
 
 	public String getYoutubeChannel() {return youtubeChannel;}
 	public void setYoutubeChannel(String youtubeChannel) {this.youtubeChannel = youtubeChannel;}
@@ -39,13 +45,14 @@ public class InstructorDetail {
 	public String getHobby() {return hobby;}
 	public void setHobby(String hobby) {this.hobby = hobby;}
 
-	// TODO: try protected setter
 	public Instructor getInstructor() {return instructor;}
-	public void setInstructor(Instructor instructor) {this.instructor = instructor;}
+	// FIXME: Potential bug
+	//  - Testing for protected setter to avoid unconventional access
+	protected void setInstructor(Instructor instructor) {this.instructor = instructor;}
 
 	@Override
 	public String toString() {
-		return "InstructorDetail{" +
+		return "InstructorDetail(" + instructor.hashCode() + "){" +
 			   "id=" + id +
 			   ", youtubeChannel='" + youtubeChannel + '\'' +
 			   ", hobby='" + hobby + '\'' +
