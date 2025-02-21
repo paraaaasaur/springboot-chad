@@ -1,1 +1,1 @@
-# EXTRA: Lazy Field Initialization Within TX
+# DELETE a Course
