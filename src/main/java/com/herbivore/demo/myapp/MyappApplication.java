@@ -65,11 +65,13 @@ public class MyappApplication {
 
 //			findInstructorWithCourses(appDAO, 1);
 
-			findCoursesForInstructor(appDAO, 5);
+//			findCoursesForInstructor(appDAO, 5);
 
 //			testLazyObject(appDAO, 1);
 
 //			testLazyCollection(appDAO, 5);
+
+			findInstructorWithCoursesJoinFetch(appDAO, 5);
 		};
 	}
 
@@ -269,6 +271,18 @@ public class MyappApplication {
 				System.err.println(e.getClass().getSimpleName() + ": " + e.getMessage());
 			}
 		});
+
+		aqtn();
+	}
+
+	private void findInstructorWithCoursesJoinFetch(AppDAO appDAO, int id) {
+		System.out.println(cyan("> JOIN FETCHing Instructor + courses with id = " + id + "..."));
+		Instructor jfi = appDAO.findInstructorByIdJoinFetch(5);
+		System.out.println(yellow(jfi + ""));
+		System.out.println(yellow(jfi.getInstructorDetail() + ""));
+		jfi.getCourses().stream()
+				.sorted(Comparator.comparing(Course::getId))
+				.forEach(course -> System.out.println(yellow("- " + course)));
 
 		aqtn();
 	}
