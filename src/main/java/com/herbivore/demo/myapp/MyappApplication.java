@@ -83,7 +83,9 @@ public class MyappApplication {
 //			deleteInstructor(appDAO, 1);
 
 			// Throws LazyInitializationException if not initialized somehow
-			appDAO.findInstructorById(3, true).getCourses().size();
+//			appDAO.findInstructorById(3, true).getCourses().size();
+
+			deleteCourse(appDAO, 22);
 		};
 	}
 
@@ -318,6 +320,14 @@ public class MyappApplication {
 			i1.associate(c);
 			appDAO.updateCourse(c);
 		}
+
+		aqtn();
+	}
+
+	private void deleteCourse(AppDAO appDAO, int id) {
+		System.out.println(cyan("> Deleting course of id = " + id));
+
+		appDAO.deleteCourseById(id);
 
 		aqtn();
 	}
