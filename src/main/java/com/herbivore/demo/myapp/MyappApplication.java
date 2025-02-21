@@ -80,7 +80,10 @@ public class MyappApplication {
 
 //			updateCourseTitle(appDAO, 10);
 
-			deleteInstructor(appDAO, 1);
+//			deleteInstructor(appDAO, 1);
+
+			// Throws LazyInitializationException if not initialized somehow
+			appDAO.findInstructorById(3, true).getCourses().size();
 		};
 	}
 
