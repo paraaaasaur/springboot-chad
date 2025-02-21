@@ -78,5 +78,23 @@ public class AppDAOImpl implements AppDAO {
 		return new HashSet<>(query.getResultList());
 	}
 
+	@Override
+	public Instructor findInstructorByIdJoinFetch(int id) {
+		// Requires matching records in all tables
+//		String jpql = "SELECT i FROM Instructor i " +
+//					  "LEFT JOIN FETCH i.courses " +
+//					  "LEFT JOIN FETCH i.instructorDetail " +
+//					  "WHERE i.id = :id";
 
+		// Allows no match (NULL) in child tables
+		String jpql = "SELECT i FROM Instructor i " +
+					   "LEFT JOIN FETCH i.courses " +
+					   "LEFT JOIN FETCH i.instructorDetail " +
+					   "WHERE i.id = :id";
+
+		var query = entityManager.createQuery(jpql, Instructor.class)
+				.setParameter("id", id);
+
+		return query.getSingleResult();
+	}
 }
