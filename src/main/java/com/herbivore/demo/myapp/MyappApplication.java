@@ -7,10 +7,19 @@ import com.herbivore.demo.myapp.entity.Instructor;
 import com.herbivore.demo.myapp.entity.InstructorDetail;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import org.hibernate.LazyInitializationException;
+import org.hibernate.collection.spi.PersistentSet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.util.Assert;
+
+import java.util.*;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static com.herbivore.demo.myapp.util.Trivial.aqtn;
 import static io.github.paraaaasaur.util.Toolbox.*;
@@ -21,6 +30,7 @@ public class MyappApplication {
 
 	private AppDAO appDAO;
 
+	@Autowired
 	public MyappApplication(AppDAO appDAO) {
 		this.appDAO = appDAO;
 	}
@@ -35,7 +45,7 @@ public class MyappApplication {
 		return runner -> {
 //			createInstructor(appDAO);
 
-//			findInstructor(appDAO, 3);
+//			findInstructor(appDAO, 1);
 
 //			updateInstructor(appDAO);
 
@@ -47,7 +57,15 @@ public class MyappApplication {
 
 //			deleteDetail(appDAO, 31);
 
-			createInstructorWithCourses(appDAO);
+//			createInstructorWithCourses(appDAO);
+
+//			findInstructorWithCourses(appDAO, 1);
+
+			findCoursesForInstructor(appDAO, 5);
+
+//			testLazyObject(appDAO, 1);
+
+//			testLazyCollection(appDAO, 5);
 		};
 	}
 
@@ -139,9 +157,116 @@ public class MyappApplication {
 		aqtn();
 	}
 
+	private void findInstructorWithCourses(AppDAO appDAO, int instructorId) {
+		System.out.println(cyan("> Retrieving Instructor with id = " + instructorId + "..."));
+
+		Instructor found = appDAO.findInstructorById(instructorId);
+
+		System.out.println(found);
+		System.out.println(found.getCourses());
+
+		aqtn();
+	}
+
+	private void findCoursesForInstructor(AppDAO appDAO, int instructorId) {
+		System.out.println(cyan("> Retrieving Instructor with id = " + instructorId + "..."));
+		Instructor foundInstructor = appDAO.findInstructorById(instructorId);
+		System.out.println(foundInstructor.getFirstName() + " " +
+						   foundInstructor.getLastName());
+
+		System.out.println(cyan("> Retrieving Courses with instructor_id = " + instructorId + "..."));
+		Set<Course> foundCourses = appDAO.findCoursesById(instructorId);
+
+		var lazyCourses = (PersistentSet<Course>) foundInstructor.getCourses();
 
 
+//		System.out.println(persistenceUtil.isLoaded(lazyCourses));
+//		System.out.println(persistenceUtil.isLoaded(foundInstructor, "courses"));
+//		Hibernate.initialize(foundInstructor);
+//		System.out.println(Hibernate.isInitialized(lazyCourses));
 
+
+		foundInstructor.setCourses(foundCourses);
+		foundCourses.forEach(course -> course.setInstructor(foundInstructor));
+
+		System.out.println(cyan("> The associated courses: "
+								+ foundInstructor.getCourses()));
+
+		aqtn();
+	}
+
+	/** You should set fetch type LAZY in Course class to test*/
+	private void testLazyObject(AppDAO appDAO, int instructorId) {
+		System.out.println(yellow("(Set fetch type LAZY for Course before testing!)"));
+		System.out.println(cyan("> Retrieving Courses with instructor_id = " + instructorId + "..."));
+		Set<Course> foundCourses = appDAO.findCoursesById(instructorId);
+		Course course = foundCourses.stream().reduce(null, (r, v) -> v);
+		Assert.notNull(course, "course is null");
+		Instructor lazyInstructor = course.getInstructor();
+
+		// Fields except for ID are not accessible for lazily loaded entity
+		Set<Supplier<Object>> getters = Stream.of((Supplier<Object>)
+				// ↓ pass ↓
+				lazyInstructor::getId,
+				lazyInstructor::getClass,
+				lazyInstructor::hashCode,
+				() -> lazyInstructor.equals(lazyInstructor),
+				// ↓ fail ↓
+				lazyInstructor::getFirstName,
+				lazyInstructor::getLastName,
+				lazyInstructor::getEmail,
+				lazyInstructor::getInstructorDetail,
+				lazyInstructor::getCourses
+		).collect(Collectors.toCollection(LinkedHashSet::new));
+
+		getters.forEach(getter -> {
+			try {
+				System.out.println(blue(getter.get().toString()));
+			} catch (LazyInitializationException e) {
+				System.err.println(e.getClass().getSimpleName() + ": " + e.getMessage());
+			}
+		});
+
+		aqtn();
+	}
+
+	/** You should set fetch type LAZY in Instructor class to test*/
+	private void testLazyCollection(AppDAO appDAO, int instructorId) {
+		System.out.println(yellow("(Set fetch type LAZY for Instructor class before testing!)"));
+		System.out.println(cyan("> Retrieving Courses with instructor_id = " + instructorId + "..."));
+		Instructor foundInstructor = appDAO.findInstructorById(instructorId);
+		Set<Course> lazyCourses = foundInstructor.getCourses();
+
+		Map<String, Runnable> logics = new HashMap<>();
+		// fail
+		logics.put(".equal()", () -> lazyCourses.equals(lazyCourses));
+		logics.put(".add()", () -> lazyCourses.add(new Course("!Hola")));
+		logics.put(".contains()", () -> lazyCourses.contains(null));
+		logics.put(".remove()", () -> lazyCourses.remove(null));
+		logics.put(".stream() + .forEach()", () -> lazyCourses.stream().forEach(System.out::println));
+		logics.put(".toString()", lazyCourses::toString);
+		logics.put(".clear()", lazyCourses::clear);
+		logics.put(".notify()", lazyCourses::notify);
+		logics.put(".hashCode()", lazyCourses::hashCode);
+		logics.put(".isEmpty()", lazyCourses::isEmpty);
+		logics.put(".size()", lazyCourses::size);
+		logics.put(".iterator()", lazyCourses::iterator);
+		logics.put("new HashSet", () -> new HashSet<>(lazyCourses));
+		// pass
+		logics.put(".stream()", lazyCourses::stream);
+
+		logics.forEach((methodName, logic) -> {
+			try {
+				logic.run();
+				System.out.println(blue(methodName + " passed^_^"));
+			} catch (Exception e) {
+				System.err.println(yellow(methodName + " failed!"));
+				System.err.println(e.getClass().getSimpleName() + ": " + e.getMessage());
+			}
+		});
+
+		aqtn();
+	}
 
 	@PostConstruct
 	public void aparecium() {
