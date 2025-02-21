@@ -1,7 +1,7 @@
-# Update Course
+# Delete Instructor Alone
 
-* Purpose: UPDATE a course
+* Purpose: DELETE an instructor after dissociating with child records
 * Process:
-  1. Retrieve a course record by ID
-  2. Change title
-  3. Merge it
+  1. Update `deleteInstructorById` method to ensure dissociation before remove
+  2. Run it
+* Dissociation doesn't trigger `LazyInitializationException` within a transaction(session)

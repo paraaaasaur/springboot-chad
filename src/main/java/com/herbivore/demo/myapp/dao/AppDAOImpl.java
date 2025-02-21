@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
+import static io.github.paraaaasaur.util.Toolbox.blue;
+
 @Repository
 public class AppDAOImpl implements AppDAO {
 
@@ -43,12 +45,15 @@ public class AppDAOImpl implements AppDAO {
 	public void deleteInstructorById(int id) {
 		Instructor found = entityManager.find(Instructor.class, id);
 
-//		found.removeDetail();
-//		found.setInstructorDetail(null);
-//		found.getInstructorDetail().setInstructor(null);
+		// No LazyInitializationException because of @Transactional,
+		// i.e. within a session
 		found.dissociateDetail();
-//		entityManager.detach(found.getInstructorDetail());
-//		entityManager.remove(found);
+		for (var course : found.getCourses()) {
+			System.out.println(blue("> Dissociating %s w/ np were within session( ^)o(^ )".formatted(course)));
+			course.setInstructor(null);
+		}
+
+		entityManager.remove(found);
 	}
 
 	@Override
