@@ -1,7 +1,10 @@
 package com.herbivore.demo.myapp.dao;
 
+import com.herbivore.demo.myapp.entity.Course;
 import com.herbivore.demo.myapp.entity.Instructor;
 import com.herbivore.demo.myapp.entity.InstructorDetail;
+
+import java.util.Set;
 
 public interface AppDAO {
 
@@ -20,4 +23,6 @@ public interface AppDAO {
 	void updateInstructorDetail(InstructorDetail instructorDetail);
 
 	void deleteInstructorDetailById(int id);
+
+	Set<Course> findCoursesById(int id);
 }

@@ -35,7 +35,6 @@ public class InstructorDetail {
 	}
 
 	public int getId() {return id;}
-	// FIXME: Potential bug using protected setter
 	protected void setId(int id) {this.id = id;}
 
 	public String getYoutubeChannel() {return youtubeChannel;}
@@ -45,13 +44,11 @@ public class InstructorDetail {
 	public void setHobby(String hobby) {this.hobby = hobby;}
 
 	public Instructor getInstructor() {return instructor;}
-	// FIXME: Potential bug
-	//  - Testing for protected setter to avoid unconventional access
-	protected void setInstructor(Instructor instructor) {this.instructor = instructor;}
+	public void setInstructor(Instructor instructor) {this.instructor = instructor;}
 
 	@Override
 	public String toString() {
-		return "InstructorDetail(" + (instructor == null? "" : instructor.hashCode()) + "){" +
+		return "InstructorDetail{" +
 			   "id=" + id +
 			   ", youtubeChannel='" + youtubeChannel + '\'' +
 			   ", hobby='" + hobby + '\'' +

@@ -2,10 +2,7 @@ package com.herbivore.demo.myapp.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -37,6 +34,7 @@ public class Instructor {
 
 	@OneToMany(
 			cascade = {PERSIST, MERGE, REFRESH, DETACH},
+			fetch = FetchType.LAZY,
 			mappedBy = "instructor"
 	)
 	private Set<Course> courses = new HashSet<>();
@@ -57,6 +55,13 @@ public class Instructor {
 	}
 
 	public void associate(Course... courses) {
+		for (var course : courses) {
+			this.courses.add(course);
+			course.setInstructor(this);
+		}
+	}
+
+	public void associate(Collection<Course> courses) {
 		for (var course : courses) {
 			this.courses.add(course);
 			course.setInstructor(this);
@@ -89,7 +94,6 @@ public class Instructor {
 
 
 	public int getId() {return id;}
-	// FIXME: Potential bug using protected setter
 	protected void setId(int id) {this.id = id;}
 
 	public String getFirstName() {return firstName;}
@@ -102,24 +106,18 @@ public class Instructor {
 	public void setEmail(String email) {this.email = email;}
 
 	public InstructorDetail getInstructorDetail() {return instructorDetail;}
-	// FIXME: Potential bug
-	//  - Testing for protected setter to force using convenience method
-	protected void setInstructorDetail(InstructorDetail instructorDetail) {this.instructorDetail = instructorDetail;}
+	public void setInstructorDetail(InstructorDetail instructorDetail) {this.instructorDetail = instructorDetail;}
 
 	public Set<Course> getCourses() {return courses;}
-	protected void setCourses(Set<Course> courses) {this.courses = courses;}
+	public void setCourses(Set<Course> courses) {this.courses = courses;}
 
 	@Override
 	public String toString() {
-		String detailString = instructorDetail == null? "(No InstructorDetail)" : instructorDetail.toString();
-		String coursesString = String.join("\n\t- ", courses.stream().map(Course::toString).toArray(String[]::new));
-		return "Instructor(" + hashCode() + "){" +
+		return "Instructor{" +
 			   "id=" + id +
 			   ", firstName='" + firstName + '\'' +
 			   ", lastName='" + lastName + '\'' +
 			   ", email='" + email + '\'' +
-			   ", \n- " + detailString +
-			   ", \n- courses: \n\t- " + coursesString +
 			   '}';
 	}
 }

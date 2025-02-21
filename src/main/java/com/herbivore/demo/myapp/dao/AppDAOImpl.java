@@ -1,10 +1,15 @@
 package com.herbivore.demo.myapp.dao;
 
+import com.herbivore.demo.myapp.entity.Course;
 import com.herbivore.demo.myapp.entity.Instructor;
 import com.herbivore.demo.myapp.entity.InstructorDetail;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Repository
 public class AppDAOImpl implements AppDAO {
@@ -63,6 +68,14 @@ public class AppDAOImpl implements AppDAO {
 		InstructorDetail foundDetail = entityManager.find(InstructorDetail.class, id);
 		foundDetail.dissociateInstructor();
 		entityManager.remove(foundDetail);
+	}
+
+	@Override
+	public Set<Course> findCoursesById(int id) {
+		String hql = "FROM Course WHERE instructor.id = ?1";
+		TypedQuery<Course> query = entityManager.createQuery(hql, Course.class)
+				.setParameter(1, id);
+		return new HashSet<>(query.getResultList());
 	}
 
 
