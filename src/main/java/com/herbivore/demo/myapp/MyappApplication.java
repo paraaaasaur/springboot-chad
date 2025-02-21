@@ -7,6 +7,7 @@ import com.herbivore.demo.myapp.entity.Instructor;
 import com.herbivore.demo.myapp.entity.InstructorDetail;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
+import jakarta.persistence.PersistenceUtil;
 import org.hibernate.LazyInitializationException;
 import org.hibernate.collection.spi.PersistentSet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,12 @@ public class MyappApplication {
 
 	private AppDAO appDAO;
 
+	private PersistenceUtil persistenceUtil;
+
 	@Autowired
-	public MyappApplication(AppDAO appDAO) {
+	public MyappApplication(AppDAO appDAO, PersistenceUtil persistenceUtil) {
 		this.appDAO = appDAO;
+		this.persistenceUtil = persistenceUtil;
 	}
 
 	public static void main(String[] args) {
@@ -144,11 +148,11 @@ public class MyappApplication {
 		var instructor = new Instructor("Loren", "Pepper", "owl-life@gmail.com");
 
 		instructor.associate(
-			new Course("200 Hours Yoga Teacher Training - Part 1 (Yoga Alliance)"),
-			new Course("The No. 1 Breathwork & Meditation course | \"Breath is Life\""),
-			new Course("Learn to Play the Flute: Beginner Basics to Intermediate"),
-			new Course("Complete Indonesian Course: Learn Indonesian for Beginners"),
-			new Course("Eat Real Food: How to Eat a Whole Food, Plant-Based Diet")
+				new Course("200 Hours Yoga Teacher Training - Part 1 (Yoga Alliance)"),
+				new Course("The No. 1 Breathwork & Meditation course | \"Breath is Life\""),
+				new Course("Learn to Play the Flute: Beginner Basics to Intermediate"),
+				new Course("Complete Indonesian Course: Learn Indonesian for Beginners"),
+				new Course("Eat Real Food: How to Eat a Whole Food, Plant-Based Diet")
 		);
 
 		System.out.println(instructor);
@@ -180,7 +184,8 @@ public class MyappApplication {
 		var lazyCourses = (PersistentSet<Course>) foundInstructor.getCourses();
 
 
-//		System.out.println(persistenceUtil.isLoaded(lazyCourses));
+
+		System.out.println(persistenceUtil.isLoaded(lazyCourses));
 //		System.out.println(persistenceUtil.isLoaded(foundInstructor, "courses"));
 //		Hibernate.initialize(foundInstructor);
 //		System.out.println(Hibernate.isInitialized(lazyCourses));
@@ -206,8 +211,8 @@ public class MyappApplication {
 
 		// Fields except for ID are not accessible for lazily loaded entity
 		Set<Supplier<Object>> getters = Stream.of((Supplier<Object>)
-				// ↓ pass ↓
-				lazyInstructor::getId,
+						// ↓ pass ↓
+						lazyInstructor::getId,
 				lazyInstructor::getClass,
 				lazyInstructor::hashCode,
 				() -> lazyInstructor.equals(lazyInstructor),
