@@ -85,7 +85,9 @@ public class MyappApplication {
 			// Throws LazyInitializationException if not initialized somehow
 //			appDAO.findInstructorById(3, true).getCourses().size();
 
-			deleteCourse(appDAO, 22);
+//			deleteCourse(appDAO, 22);
+
+			demoSetNullInconsistency();
 		};
 	}
 
@@ -330,6 +332,10 @@ public class MyappApplication {
 		appDAO.deleteCourseById(id);
 
 		aqtn();
+	}
+
+	private void demoSetNullInconsistency() {
+		appDAO.demoSetNullInconsistency();
 	}
 
 	private String getRandomCourseTitle() {

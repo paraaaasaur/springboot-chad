@@ -138,4 +138,22 @@ public class AppDAOImpl implements AppDAO {
 
 		entityManager.remove(foundCourse);
 	}
+
+	@Transactional
+	@Override
+	public void demoSetNullInconsistency() {
+		// Inconsistent set-null behavior across each type of association...
+		// No cascade, no orphanRemoval
+		Instructor i3 = entityManager.find(Instructor.class, 3);
+		Course c10 = entityManager.find(Course.class, 10);
+		Course c12 = entityManager.find(Course.class, 12);
+
+		// irrelevant
+		i3.getCourses().remove(c10);
+		i3.setCourses(null);
+
+		// relevant
+//		c10.setInstructor(null);
+//		c10.setInstructor(i3);
+	}
 }
