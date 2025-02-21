@@ -11,6 +11,7 @@ import jakarta.persistence.PersistenceUtil;
 import org.hibernate.LazyInitializationException;
 import org.hibernate.collection.spi.PersistentSet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.util.Assert;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -32,6 +34,9 @@ public class MyappApplication {
 	private AppDAO appDAO;
 
 	private PersistenceUtil persistenceUtil;
+
+	@Value("${app.courseTitles}")
+	private LinkedList<String> courseTitles;
 
 	@Autowired
 	public MyappApplication(AppDAO appDAO, PersistenceUtil persistenceUtil) {
@@ -71,7 +76,9 @@ public class MyappApplication {
 
 //			testLazyCollection(appDAO, 5);
 
-			findInstructorWithCoursesJoinFetch(appDAO, 5);
+//			findInstructorWithCoursesJoinFetch(appDAO, 5);
+
+			updateCourseTitle(appDAO, 10);
 		};
 	}
 
@@ -285,6 +292,35 @@ public class MyappApplication {
 				.forEach(course -> System.out.println(yellow("- " + course)));
 
 		aqtn();
+	}
+
+	private void updateCourseTitle(AppDAO appDAO, int courseId) {
+		System.out.println(cyan("> Finding course title with id = " + courseId + "..."));
+
+		Course foundCourse = appDAO.findCourseById(courseId);
+
+		foundCourse.setTitle(getRandomCourseTitle());
+
+		System.out.println(cyan("> Updating course title with id = " + courseId + "..."));
+
+		appDAO.updateCourse(foundCourse);
+
+		if (false) {
+			// ObjectOptimisticLockingFailureException blablabla
+			Instructor i1 = appDAO.findInstructorByIdJoinFetch(1);
+			Course c = new Course(getRandomCourseTitle());
+//			c.setId(9);
+			i1.associate(c);
+			appDAO.updateCourse(c);
+		}
+
+		aqtn();
+	}
+
+	private String getRandomCourseTitle() {
+		Collections.shuffle(courseTitles);
+		int randomYear = ThreadLocalRandom.current().nextInt(1977, 3077);
+		return courseTitles.element() + "(" + randomYear + ")";
 	}
 
 	@PostConstruct
