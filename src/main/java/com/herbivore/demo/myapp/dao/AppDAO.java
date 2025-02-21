@@ -35,4 +35,6 @@ public interface AppDAO {
 	void updateCourse(Course course);
 
 	void deleteCourseById(int id);
+
+	void demoSetNullInconsistency();
 }
