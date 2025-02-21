@@ -12,6 +12,8 @@ public interface AppDAO {
 
 	Instructor findInstructorById(int id);
 
+	Instructor findInstructorById(int id, boolean initializeCoures);
+
 	void updateInstructor(Instructor instructor);
 
 	void deleteInstructorById(int id);

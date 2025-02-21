@@ -36,6 +36,23 @@ public class AppDAOImpl implements AppDAO {
 
 	@Transactional
 	@Override
+	public Instructor findInstructorById(int id, boolean initializeCourses) {
+		if (!initializeCourses)
+			return findInstructorById(id);
+
+		Instructor found = entityManager.find(Instructor.class, id);
+		// Do random things to force initialization within a tx
+//		Hibernate.initialize(found.getCourses());
+//		found.getCourses().toString();
+//		found.getCourses().isEmpty();
+//		for (var course : found.getCourses()) {}
+		found.getCourses().hashCode();
+
+		return found;
+	}
+
+	@Transactional
+	@Override
 	public void updateInstructor(Instructor instructor) {
 		entityManager.merge(instructor);
 	}
