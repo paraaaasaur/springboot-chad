@@ -78,7 +78,9 @@ public class MyappApplication {
 
 //			findInstructorWithCoursesJoinFetch(appDAO, 5);
 
-			updateCourseTitle(appDAO, 10);
+//			updateCourseTitle(appDAO, 10);
+
+			deleteInstructor(appDAO, 1);
 		};
 	}
 
