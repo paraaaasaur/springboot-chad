@@ -95,7 +95,9 @@ public class MyappApplication {
 
 //			createCourseAndReviews();
 
-			findCourseAndReviews(11);
+//			findCourseAndReviews(11);
+
+			deleteCourseAndReviews(11);
 		};
 	}
 
@@ -379,6 +381,14 @@ public class MyappApplication {
 		dbCourse.getReviews().forEach(review -> {
 			System.out.println(yellow("- " + review));
 		});
+
+		aqtn();
+	}
+
+	private void deleteCourseAndReviews(int id) {
+		System.out.println(cyan("> Deleting Course & c.reviews of id = " + id));
+
+		appDAO.deleteCourseById(id);
 
 		aqtn();
 	}

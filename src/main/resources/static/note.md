@@ -1,1 +1,3 @@
-# Find Course (And Reviews) w/ LEFT JOIN FETCH
+# Remove Course (And Reviews)
+
+* No need for new DAO method
