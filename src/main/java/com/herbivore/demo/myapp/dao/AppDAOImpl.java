@@ -156,4 +156,10 @@ public class AppDAOImpl implements AppDAO {
 //		c10.setInstructor(null);
 //		c10.setInstructor(i3);
 	}
+
+	@Transactional
+	@Override
+	public void saveCourse(Course course) {
+		entityManager.persist(course);
+	}
 }

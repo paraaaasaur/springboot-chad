@@ -5,6 +5,7 @@ import com.herbivore.demo.myapp.dao.AppDAO;
 import com.herbivore.demo.myapp.entity.Course;
 import com.herbivore.demo.myapp.entity.Instructor;
 import com.herbivore.demo.myapp.entity.InstructorDetail;
+import com.herbivore.demo.myapp.entity.Review;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.persistence.PersistenceUtil;
@@ -90,7 +91,9 @@ public class MyappApplication {
 
 //			deleteCourse(appDAO, 22);
 
-			demoSetNullInconsistency();
+//			demoSetNullInconsistency();
+
+			createCourseAndReviews();
 		};
 	}
 
@@ -339,6 +342,29 @@ public class MyappApplication {
 
 	private void demoSetNullInconsistency() {
 		appDAO.demoSetNullInconsistency();
+	}
+
+	private void createCourseAndReviews() {
+		System.out.println(cyan("> Creating new course + reviews..."));
+
+		Course tempCourse = new Course(getRandomCourseTitle());
+		System.out.println(cyan("tempCourse = " + tempCourse));
+		System.out.println(tempCourse.getReviews().getClass());
+		System.out.println(tempCourse.getReviews());
+
+		Review tempReview1 = new Review(getRandomComment());
+		Review tempReview2 = new Review(getRandomComment());
+		Review tempReview3 = new Review(getRandomComment());
+		System.out.println(yellow(String.format(
+				"tempReviews = \n- %s\n- %s\n- %s",
+				tempReview1, tempReview2, tempReview3
+		)));
+
+		tempCourse.associate(tempReview1, tempReview2, tempReview3);
+
+		appDAO.saveCourse(tempCourse);
+
+		aqtn();
 	}
 
 	private String getRandomCourseTitle() {
