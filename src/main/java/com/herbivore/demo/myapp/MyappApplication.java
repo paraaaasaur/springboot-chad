@@ -38,6 +38,9 @@ public class MyappApplication {
 	@Value("${app.courseTitles}")
 	private LinkedList<String> courseTitles;
 
+	@Value("${app.comments}")
+	private LinkedList<String> comments;
+
 	@Autowired
 	public MyappApplication(AppDAO appDAO, PersistenceUtil persistenceUtil) {
 		this.appDAO = appDAO;
@@ -342,6 +345,12 @@ public class MyappApplication {
 		Collections.shuffle(courseTitles);
 		int randomYear = ThreadLocalRandom.current().nextInt(1977, 3077);
 		return courseTitles.element() + "(" + randomYear + ")";
+	}
+
+	private String getRandomComment() {
+		Collections.shuffle(comments);
+		int randomRating = ThreadLocalRandom.current().nextInt(0, 11);
+		return comments.element() + "(" + randomRating + "/10)";
 	}
 
 	@PostConstruct

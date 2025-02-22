@@ -1,18 +1,13 @@
-# EXTRA: Inconsistency of set-null Behavior across Each Type of Association
+# 1-M Unidirectional
 
-## Nullifying FK
+## Model
 
-### 1-1
-* parent.setParent(null)
-### 1-M
-* child.setParent(null)
-* Useless: 
-  * parent.setChild(null)
-  * parent.getChildren.remove(child)
+* 1(course) -> M(review)
+* CascadeType: ALL
 
+## Preparation
 
-## Verdict: 
-
-* JPA is too creative.
-* No need to memorize patterns. Feel free to forget.
-* Best way? Just test it before implementation.
+1. db & tables: ch08-my-version > hb-04-one-to-many-uni
+2. application.properties > url
+3. Create `Review.class`
+4. Refactor `Course.class`
