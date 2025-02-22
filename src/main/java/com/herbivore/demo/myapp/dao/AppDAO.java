@@ -39,4 +39,6 @@ public interface AppDAO {
 	void demoSetNullInconsistency();
 
 	void saveCourse(Course course);
+
+	Course findCourseAndReviewsById(int id);
 }
