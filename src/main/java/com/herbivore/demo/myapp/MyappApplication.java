@@ -93,9 +93,12 @@ public class MyappApplication {
 
 //			demoSetNullInconsistency();
 
-			createCourseAndReviews();
+//			createCourseAndReviews();
+
+			findCourseAndReviews(11);
 		};
 	}
+
 
 	private void createInstructor(AppDAO appDAO) {
 		System.out.println(cyan("> Creating Instructor (and details)"));
@@ -363,6 +366,19 @@ public class MyappApplication {
 		tempCourse.associate(tempReview1, tempReview2, tempReview3);
 
 		appDAO.saveCourse(tempCourse);
+
+		aqtn();
+	}
+
+	private void findCourseAndReviews(int id) {
+		System.out.println(cyan("> JOIN FETCHing Course + reviews with id = " + id + "..."));
+
+		Course dbCourse = appDAO.findCourseAndReviewsById(id);
+
+		System.out.println(yellow(dbCourse + ""));
+		dbCourse.getReviews().forEach(review -> {
+			System.out.println(yellow("- " + review));
+		});
 
 		aqtn();
 	}
