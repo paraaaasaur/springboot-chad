@@ -2,10 +2,9 @@ package com.herbivore.demo.myapp.entity;
 
 import jakarta.persistence.*;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
+import java.util.*;
+
+import static jakarta.persistence.CascadeType.*;
 
 @Entity
 @Table(name = "course")
@@ -31,6 +30,18 @@ public class Course {
 	)
 	@JoinColumn(name = "course_id")
 	private Collection<Review> reviews = new HashSet<>();
+
+	// 2-sided-unidirectional M-M
+	@ManyToMany(
+			cascade = {PERSIST, MERGE, REFRESH, DETACH},
+			fetch = FetchType.LAZY
+	)
+	@JoinTable(
+			name = "course_student",
+			joinColumns = @JoinColumn(name = "course_id"),
+			inverseJoinColumns = @JoinColumn(name = "student_id")
+	)
+	private Set<Student> students = new HashSet<>();
 
 	protected Course() {}
 
@@ -67,6 +78,9 @@ public class Course {
 
 	public Collection<Review> getReviews() {return reviews;}
 	public void setReviews(Collection<Review> reviews) {this.reviews = reviews;}
+
+	public Set<Student> getStudents() {return students;}
+	public void setStudents(Set<Student> students) {this.students = students;}
 
 	@Override
 	public String toString() {

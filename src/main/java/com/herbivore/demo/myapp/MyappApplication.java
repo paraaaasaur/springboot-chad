@@ -42,6 +42,18 @@ public class MyappApplication {
 	@Value("${app.comments}")
 	private LinkedList<String> comments;
 
+	@Value("${app.firstNames}")
+	private LinkedList<String> firstNames;
+
+	@Value("${app.lastNames}")
+	private LinkedList<String> lastNames;
+
+	@Value("${app.emailIds}")
+	private LinkedList<String> emailIds;
+
+	@Value("${app.emailDomains}")
+	private LinkedList<String> emailDomains;
+
 	@Autowired
 	public MyappApplication(AppDAO appDAO, PersistenceUtil persistenceUtil) {
 		this.appDAO = appDAO;
@@ -97,7 +109,9 @@ public class MyappApplication {
 
 //			findCourseAndReviews(11);
 
-			deleteCourseAndReviews(11);
+//			deleteCourseAndReviews(11);
+
+			
 		};
 	}
 
@@ -403,6 +417,22 @@ public class MyappApplication {
 		Collections.shuffle(comments);
 		int randomRating = ThreadLocalRandom.current().nextInt(0, 11);
 		return comments.element() + "(" + randomRating + "/10)";
+	}
+
+	private String getRandomFirstName() {
+		Collections.shuffle(firstNames);
+		return firstNames.element();
+	}
+
+	private String getRandomLastName() {
+		Collections.shuffle(lastNames);
+		return lastNames.element();
+	}
+
+	private String getRandomEmail() {
+		Collections.shuffle(emailIds);
+		Collections.shuffle(emailDomains);
+		return emailIds.element() + "@" + emailDomains.element();
 	}
 
 	@PostConstruct
