@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static io.github.paraaaasaur.util.Toolbox.blue;
+import static io.github.paraaaasaur.util.Toolbox.yellow;
 
 @Repository
 public class AppDAOImpl implements AppDAO {
@@ -216,5 +217,27 @@ public class AppDAOImpl implements AppDAO {
 		Student dbStudent = entityManager.find(Student.class, id);
 
 		entityManager.remove(dbStudent);
+	}
+
+	@Transactional
+	@Override
+	public void deleteStudentCourseAssociation(int studentId, int courseId) {
+		// Delete a course from a student
+		if (false) {
+			Student dbStudent = entityManager.find(Student.class, studentId);
+			Course dbCourse = entityManager.find(Course.class, courseId);
+			System.out.println(yellow("Student: " + dbStudent));
+			System.out.println(yellow("Withdrawing Course: " + dbCourse));
+			dbStudent.getCourses().remove(dbCourse);
+		}
+
+		// Delete a student from a course
+		if (true) {
+			Course dbCourse = entityManager.find(Course.class, courseId);
+			Student dbStudent = entityManager.find(Student.class, studentId);
+			System.out.println(yellow("Student: " + dbStudent));
+			System.out.println(yellow("Withdrawing Course: " + dbCourse));
+			dbCourse.getStudents().remove(dbStudent);
+		}
 	}
 }
