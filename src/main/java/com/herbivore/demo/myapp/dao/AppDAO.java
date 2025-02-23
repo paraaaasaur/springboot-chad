@@ -48,4 +48,6 @@ public interface AppDAO {
 	void saveStudent(Student student);
 
 	Student findStudentAndCoursesById(int id);
+
+	void update(Student student);
 }

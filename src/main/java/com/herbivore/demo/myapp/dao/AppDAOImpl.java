@@ -203,4 +203,10 @@ public class AppDAOImpl implements AppDAO {
 
 		return query.getSingleResult();
 	}
+
+	@Transactional
+	@Override
+	public void update(Student student) {
+		entityManager.merge(student);
+	}
 }

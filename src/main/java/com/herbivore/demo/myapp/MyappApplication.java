@@ -114,7 +114,9 @@ public class MyappApplication {
 //			findCourseAndStudents(11);
 
 //			createStudentAndCourses();
-			findStudentAndCourses(9);
+//			findStudentAndCourses(9);
+
+			addMoreCoursesForStudent(1);
 		};
 	}
 
@@ -470,6 +472,27 @@ public class MyappApplication {
 		dbStudent.getCourses().stream()
 				.sorted(Comparator.comparing(Course::getId))
 				.forEach(course -> System.out.println(yellow("- " + course)));
+
+		aqtn();
+	}
+
+	private void addMoreCoursesForStudent(int id) {
+		System.out.println(cyan("> Adding More courses for Student with id " + id + "..."));
+
+		Student dbStudent = appDAO.findStudentAndCoursesById(id);
+		System.out.println(yellow("Retrieved detail:"));
+		System.out.println(yellow(dbStudent + ""));
+		dbStudent.getCourses().forEach(course -> System.out.println(yellow("- " + course)));
+
+		IntStream.range(1, 4)
+				.mapToObj(i -> new Course(getRandomCourseTitle()))
+				.forEach(newCourse -> {
+					System.out.println(yellow("> Adding new course: " + newCourse));
+					dbStudent.getCourses().add(newCourse);
+				});
+
+		appDAO.update(dbStudent);
+//		appDAO.saveStudent(dbStudent);
 
 		aqtn();
 	}
