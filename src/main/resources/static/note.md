@@ -1,1 +1,1 @@
-# M-M Association (2-Sided Unidirectional) 
+# Find Course c + c.students (using LEFT JOIN FETCH)
