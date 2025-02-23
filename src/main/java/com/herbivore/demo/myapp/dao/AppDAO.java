@@ -3,6 +3,7 @@ package com.herbivore.demo.myapp.dao;
 import com.herbivore.demo.myapp.entity.Course;
 import com.herbivore.demo.myapp.entity.Instructor;
 import com.herbivore.demo.myapp.entity.InstructorDetail;
+import com.herbivore.demo.myapp.entity.Student;
 
 import java.util.Set;
 
@@ -43,4 +44,8 @@ public interface AppDAO {
 	Course findCourseAndReviewsById(int id);
 
 	Course findCourseAndStudentsById(int id);
+
+	void saveStudent(Student student);
+
+	Student findStudentAndCoursesById(int id);
 }

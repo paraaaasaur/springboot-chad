@@ -111,7 +111,10 @@ public class MyappApplication {
 
 //			createCourseAndStudents();
 
-			findCourseAndStudents(11);
+//			findCourseAndStudents(11);
+
+//			createStudentAndCourses();
+			findStudentAndCourses(9);
 		};
 	}
 
@@ -435,6 +438,38 @@ public class MyappApplication {
 		dbCourse.getStudents().stream()
 				.sorted(Comparator.comparing(Student::getId))
 				.forEach(student -> System.out.println(yellow("- " + student)));
+
+		aqtn();
+	}
+
+	private void createStudentAndCourses() {
+		System.out.println(cyan("> Creating new Student s + s.courses..."));
+
+		Student tempStudent = new Student(getRandomFirstName(), getRandomLastName(), getRandomEmail());
+		System.out.println(yellow(tempStudent + ""));
+
+		Course[] tempCourses = IntStream.range(2, 6)
+				.mapToObj(i -> new Course(getRandomCourseTitle()))
+				.toArray(Course[]::new);
+		Arrays.asList(tempCourses).forEach(course -> {
+			System.out.println(yellow("- " + course));
+
+			tempStudent.getCourses().add(course);
+		});
+
+		appDAO.saveStudent(tempStudent);
+		aqtn();
+	}
+
+	private void findStudentAndCourses(int id) {
+		System.out.println(cyan("> Finding Student s + s.courses with id = " + id));
+
+		Student dbStudent = appDAO.findStudentAndCoursesById(id);
+
+		System.out.println(yellow(dbStudent + ""));
+		dbStudent.getCourses().stream()
+				.sorted(Comparator.comparing(Course::getId))
+				.forEach(course -> System.out.println(yellow("- " + course)));
 
 		aqtn();
 	}
