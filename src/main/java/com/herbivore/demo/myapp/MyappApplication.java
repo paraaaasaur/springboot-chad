@@ -2,10 +2,7 @@ package com.herbivore.demo.myapp;
 
 
 import com.herbivore.demo.myapp.dao.AppDAO;
-import com.herbivore.demo.myapp.entity.Course;
-import com.herbivore.demo.myapp.entity.Instructor;
-import com.herbivore.demo.myapp.entity.InstructorDetail;
-import com.herbivore.demo.myapp.entity.Review;
+import com.herbivore.demo.myapp.entity.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.persistence.PersistenceUtil;
@@ -23,6 +20,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static com.herbivore.demo.myapp.util.Trivial.aqtn;
@@ -111,7 +109,7 @@ public class MyappApplication {
 
 //			deleteCourseAndReviews(11);
 
-			
+			createCourseAndStudents();
 		};
 	}
 
@@ -404,6 +402,25 @@ public class MyappApplication {
 
 		appDAO.deleteCourseById(id);
 
+		aqtn();
+	}
+
+	private void createCourseAndStudents() {
+		System.out.println(cyan("> Creating new Course c + c.students..."));
+
+		Course tempCourse = new Course(getRandomCourseTitle());
+		System.out.println(yellow(tempCourse + ""));
+
+		Student[] tempStudents = IntStream.range(2, 6)
+				.mapToObj(i -> new Student(getRandomFirstName(), getRandomLastName(), getRandomEmail()))
+				.toArray(Student[]::new);
+		Arrays.asList(tempStudents).forEach(student -> {
+			System.out.println(yellow("- " + student));
+
+			tempCourse.getStudents().add(student);
+		});
+
+		appDAO.saveCourse(tempCourse);
 		aqtn();
 	}
 
