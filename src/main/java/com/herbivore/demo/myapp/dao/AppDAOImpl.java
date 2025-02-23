@@ -3,6 +3,7 @@ package com.herbivore.demo.myapp.dao;
 import com.herbivore.demo.myapp.entity.Course;
 import com.herbivore.demo.myapp.entity.Instructor;
 import com.herbivore.demo.myapp.entity.InstructorDetail;
+import com.herbivore.demo.myapp.entity.Student;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
@@ -182,6 +183,23 @@ public class AppDAOImpl implements AppDAO {
 
 		var query = entityManager.createQuery(jpql, Course.class)
 				.setParameter("id", id);
+
+		return query.getSingleResult();
+	}
+
+	@Transactional
+	@Override
+	public void saveStudent(Student student) {
+		entityManager.persist(student);
+	}
+
+	@Override
+	public Student findStudentAndCoursesById(int id) {
+		String jpql = "SELECT s FROM Student s " +
+					  "LEFT JOIN FETCH s.courses " +
+					  "WHERE s.id = ?1";
+		TypedQuery<Student> query = entityManager.createQuery(jpql, Student.class)
+				.setParameter(1, id);
 
 		return query.getSingleResult();
 	}
