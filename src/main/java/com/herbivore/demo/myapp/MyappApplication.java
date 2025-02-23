@@ -116,7 +116,10 @@ public class MyappApplication {
 //			createStudentAndCourses();
 //			findStudentAndCourses(9);
 
-			addMoreCoursesForStudent(1);
+//			addMoreCoursesForStudent(1);
+
+//			deleteCourse(11);
+			deleteStudent(1);
 		};
 	}
 
@@ -356,7 +359,7 @@ public class MyappApplication {
 		aqtn();
 	}
 
-	private void deleteCourse(AppDAO appDAO, int id) {
+	private void deleteCourse(int id) {
 		System.out.println(cyan("> Deleting course of id = " + id));
 
 		appDAO.deleteCourseById(id);
@@ -493,6 +496,14 @@ public class MyappApplication {
 
 		appDAO.update(dbStudent);
 //		appDAO.saveStudent(dbStudent);
+
+		aqtn();
+	}
+
+	private void deleteStudent(int id) {
+		System.out.println(cyan("> Deleting Student of id = " + id));
+
+		appDAO.deleteStudentById(id);
 
 		aqtn();
 	}
