@@ -1,4 +1,3 @@
-# Find Student s + s.courses (using LEFT JOIN FETCH)
+# Update
 
-* add `AppDAO#saveStudent` to create data for testing
-* add `AppDAO#findStudentAndCoursesById` to test
+* Retrieve a Student and add more new courses to it
