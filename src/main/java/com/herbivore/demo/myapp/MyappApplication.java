@@ -119,7 +119,9 @@ public class MyappApplication {
 //			addMoreCoursesForStudent(1);
 
 //			deleteCourse(11);
-			deleteStudent(1);
+//			deleteStudent(1);
+
+			studentWithdrawCourse(9, 14);
 		};
 	}
 
@@ -505,6 +507,14 @@ public class MyappApplication {
 
 		appDAO.deleteStudentById(id);
 
+		aqtn();
+	}
+
+	/** Dissociate a student from a course (or vice versa) */
+	private void studentWithdrawCourse(int studentId, int courseId) {
+		System.out.println(cyan("> Student#" + studentId + " wants to withdraw Course#" + courseId));
+
+		appDAO.deleteStudentCourseAssociation(studentId, courseId);
 		aqtn();
 	}
 

@@ -1,4 +1,4 @@
-# DELETE
+# EXTRA: DELETE Association Only
 
 * When we talk about delete in M-M relationship, think twice about what you want to do:
   1. Delete a course entirely (and also the associated links)?
@@ -28,4 +28,16 @@
     DELETE FROM student WHERE id=?
     ```
 
-## 3. Delete an Association (To Be Continued)
+## 3. Delete an Association Only
+
+* Java: `student.getCourses().remove(course);` or vice versa
+* Confirmation: No student/course gets deleted in DB; only association gets deleted
+* Console SQL
+  * Remove a course from a student
+    ```sql
+    DELETE FROM course_student WHERE course_id=? AND student_id=? 
+    ``` 
+  * Remove a student from a course
+    ```sql
+    DELETE FROM course_student WHERE student_id=? -- weird... but works...
+    ``` 
