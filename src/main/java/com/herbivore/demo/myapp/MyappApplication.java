@@ -109,7 +109,9 @@ public class MyappApplication {
 
 //			deleteCourseAndReviews(11);
 
-			createCourseAndStudents();
+//			createCourseAndStudents();
+
+			findCourseAndStudents(11);
 		};
 	}
 
@@ -421,6 +423,19 @@ public class MyappApplication {
 		});
 
 		appDAO.saveCourse(tempCourse);
+		aqtn();
+	}
+
+	private void findCourseAndStudents(int id) {
+		System.out.println(cyan("> Finding Course c + c.students with id = " + id));
+
+		Course dbCourse = appDAO.findCourseAndStudentsById(id);
+
+		System.out.println(yellow(dbCourse + ""));
+		dbCourse.getStudents().stream()
+				.sorted(Comparator.comparing(Student::getId))
+				.forEach(student -> System.out.println(yellow("- " + student)));
+
 		aqtn();
 	}
 
