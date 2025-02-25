@@ -2,8 +2,7 @@
 
 ## Test Target
 
-3. modifier (private, package-private, protected or public)
-4. return type
+5. method parameter type
 
 ## Syntax for Execution Pointcuts (Applies to Execution of methods)
 
@@ -16,7 +15,8 @@
       - public * addAccount(): any return type
    * Fully Qualified Method name:
       - com.herbivore.demo.myapp.dao.*.addAccount()
+   * Wildcard for method parameter:
+      - (*) matches any single type
+      - (..) matches any multiple types
 
 ## Questions
-
-* How to apply to package-private level method? 
