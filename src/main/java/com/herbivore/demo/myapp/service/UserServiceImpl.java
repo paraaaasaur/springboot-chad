@@ -1,7 +1,7 @@
 package com.herbivore.demo.myapp.service;
 
 import com.herbivore.demo.myapp.dao.AccountDAO;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.herbivore.demo.myapp.dao.MembershipDAO;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -9,9 +9,11 @@ public class UserServiceImpl implements UserService {
 
 	private AccountDAO accountDAO;
 
-	@Autowired
-	protected UserServiceImpl(AccountDAO accountDAO) {
+	private MembershipDAO membershipDAO;
+
+	protected UserServiceImpl(AccountDAO accountDAO, MembershipDAO membershipDAO) {
 		this.accountDAO = accountDAO;
+		this.membershipDAO = membershipDAO;
 	}
 
 //	@Transactional
@@ -20,9 +22,9 @@ public class UserServiceImpl implements UserService {
 
 		accountDAO.addAccount();
 
-		System.out.println("(Let's call accountDAO.addAccount() again)");
+		membershipDAO.addAccount();
 
-		accountDAO.addAccount();
+		membershipDAO.addSillyMember();
 	}
 
 

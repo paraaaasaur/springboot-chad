@@ -8,7 +8,12 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class MyDemoLoggingAspect {
 
-	@Before("execution(public void addAccount())") // pointcut
+
+	// TODO: Test different patterns here
+	// pointcut
+//	@Before("execution(public void addAccount())")
+//	@Before("execution(public void com.herbivore.demo.myapp.dao.AccountDAO.addAccount())")
+	@Before("execution(public void add*())")
 	public void beforeAddAccountAdvice() {
 		System.out.println("\n>>>>> Executing @Before advice on addAccount()<<<<<");
 	}
