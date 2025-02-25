@@ -1,13 +1,12 @@
 package com.herbivore.demo.myapp;
 
+import com.herbivore.demo.myapp.service.UserService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-
-import java.util.Arrays;
 
 import static io.github.paraaaasaur.util.Toolbox.blue;
 import static io.github.paraaaasaur.util.Toolbox.yellow;
@@ -20,8 +19,10 @@ public class MyappApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner() {
-		return args -> System.out.println("Hello, World!" + Arrays.toString(args));
+	public CommandLineRunner commandLineRunner(UserService userService) {
+		return args -> {
+			userService.demoTheBeforeAdvice();
+		};
 	}
 
 	@PostConstruct
