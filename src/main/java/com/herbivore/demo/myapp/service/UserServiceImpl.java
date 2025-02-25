@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 	public void demoTheBeforeAdvice() {
 
 		Account tempAccount = new Account();
-		accountDAO.addAccount(tempAccount);
+		accountDAO.addAccount(tempAccount, true);
 
 		membershipDAO.addAccount();
 
