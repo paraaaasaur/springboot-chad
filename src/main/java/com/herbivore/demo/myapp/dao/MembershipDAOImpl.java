@@ -16,4 +16,9 @@ public class MembershipDAOImpl implements MembershipDAO {
 
 		return 1 == 0x0000_0001;
 	}
+
+	@Override
+	public void goToSleep() {
+		System.out.println("> " + getClass() + ": I'm going to sleep now...");
+	}
 }

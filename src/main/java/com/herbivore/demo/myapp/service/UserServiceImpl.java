@@ -23,11 +23,9 @@ public class UserServiceImpl implements UserService {
 
 		Account tempAccount = new Account();
 		accountDAO.addAccount(tempAccount, true);
+		accountDAO.doWork();
 
 		membershipDAO.addAccount();
-
 		membershipDAO.addSillyMember();
 	}
-
-
 }
