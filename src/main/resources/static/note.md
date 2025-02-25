@@ -2,8 +2,8 @@
 
 ## Test Target
 
-1. method name + wildcard(*)
-2. fully qualified method name
+3. modifier (private, package-private, protected or public)
+4. return type
 
 ## Syntax for Execution Pointcuts (Applies to Execution of methods)
 
@@ -19,7 +19,4 @@
 
 ## Questions
 
-* How to specify any method under a sub-package no matter what
-  previous parent packages are called?
-   - e.g., Something like **.service.addAccount()
-* How to include multiple patterns
+* How to apply to package-private level method? 
