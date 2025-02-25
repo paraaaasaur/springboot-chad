@@ -16,7 +16,8 @@ public class MyDemoLoggingAspect {
 //	@Before("execution(void add*())")
 //	@Before("execution(* add*())")
 //	@Before("execution(* add*(com.herbivore.demo.myapp.model.Account))")
-	@Before("execution(* add*(com.herbivore.demo.myapp.model.Account, ..))")
+//	@Before("execution(* add*(com.herbivore.demo.myapp.model.Account, ..))")
+	@Before("execution(* com.herbivore..add*(..))")
 	public void beforeAddAccountAdvice() {
 		System.out.println("\n>>>>> Executing @Before advice on addAccount()<<<<<");
 	}
