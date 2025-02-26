@@ -18,14 +18,25 @@ public class MyDemoLoggingAspect {
 	@Pointcut("execution(* com.herbivore..dao.*.*(..))")
 	private void forDaoPackage() {}
 
-	@Before("forDaoPackage()")
+	@Pointcut("execution(* com.herbivore..dao.*.find*(..))")
+	private void find() {}
+
+	@Pointcut("execution(* com.herbivore..dao.*.update*(..))")
+	private void update() {}
+
+	@Pointcut("forDaoPackage() && !(find() || update())")
+	private void forDaoPackageNoFindUpdate() {}
+
 //	@Before(daoPackage)
+//	@Before("forDaoPackage()")
+	@Before("forDaoPackageNoFindUpdate()")
 	public void beforeAddAccountAdvice() {
 		System.out.println("\n>>>>> Executing @Before advice target method<<<<<");
 	}
 
 	// Reuse pointcut
-	@After("forDaoPackage()")
+//	@After("forDaoPackage()")
+	@After("forDaoPackageNoFindUpdate()")
 	public void performFabulousApiAnalytics() {
 		String randomEmoji = ANIMAL_EMOJIS[ThreadLocalRandom.current().nextInt(ANIMAL_EMOJIS.length)];
 		System.out.printf("≈≈≈≈≈ Performing API analytics%s ≈≈≈≈≈\n", randomEmoji);
