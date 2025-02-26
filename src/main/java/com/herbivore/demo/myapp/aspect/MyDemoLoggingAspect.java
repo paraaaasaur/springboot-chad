@@ -1,23 +1,33 @@
 package com.herbivore.demo.myapp.aspect;
 
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 @Aspect
 public class MyDemoLoggingAspect {
+//	private static final String daoPackage = "execution(* com.herbivore..dao.*.*(..))";
+	private static final String[] ANIMAL_EMOJIS = {"🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🐷", "🐸", "🐵", "🦄", "🐔", "🐧", "🐦", "🐤", "🦆", "🦅", "🦉", "🦇", "🐺", "🐗", "🐴", "🦓", "🦌", "🐂", "🐃", "🐄", "🐏", "🐑", "🐐", "🐪", "🐫", "🦙", "🦒", "🐘", "🦏", "🦛", "🐭", "🐹", "🐀", "🐁", "🐿️", "🦔", "🦇", "🐉", "🐲", "🐍", "🦎", "🦂", "🦖", "🦕", "🐙", "🦑", "🦀", "🐡", "🐠", "🐟", "🐬", "🐳", "🐋", "🦈", "🐊", "🐢", "🐸"};
 
-	// pointcut
-//	@Before("execution(public void addAccount())")
-//	@Before("execution(public void com.herbivore.demo.myapp.dao.AccountDAO.addAccount())")
-//	@Before("execution(void add*())")
-//	@Before("execution(* add*())")
-//	@Before("execution(* add*(com.herbivore.demo.myapp.model.Account))")
-//	@Before("execution(* add*(com.herbivore.demo.myapp.model.Account, ..))")
-//	@Before("execution(* com.herbivore..add*(..))")
-	@Before("execution(* com.herbivore..dao.*.*(..))")
+
+	@Pointcut("execution(* com.herbivore..dao.*.*(..))")
+	private void forDaoPackage() {}
+
+	@Before("forDaoPackage()")
+//	@Before(daoPackage)
 	public void beforeAddAccountAdvice() {
-		System.out.println("\n>>>>> Executing @Before advice on addAccount()<<<<<");
+		System.out.println("\n>>>>> Executing @Before advice target method<<<<<");
+	}
+
+	// Reuse pointcut
+	@After("forDaoPackage()")
+	public void performFabulousApiAnalytics() {
+		String randomEmoji = ANIMAL_EMOJIS[ThreadLocalRandom.current().nextInt(ANIMAL_EMOJIS.length)];
+		System.out.printf("≈≈≈≈≈ Performing API analytics%s ≈≈≈≈≈\n", randomEmoji);
 	}
 }
