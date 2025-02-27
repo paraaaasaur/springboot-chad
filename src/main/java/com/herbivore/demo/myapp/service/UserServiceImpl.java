@@ -24,6 +24,8 @@ public class UserServiceImpl implements UserService {
 	public void demoTheBeforeAdvice() {
 
 		Account tempAccount = new Account();
+		tempAccount.setName("Jane Doe");
+		tempAccount.setLevel("Over 9000");
 		accountDAO.addAccount(tempAccount, true);
 		accountDAO.doWork();
 
