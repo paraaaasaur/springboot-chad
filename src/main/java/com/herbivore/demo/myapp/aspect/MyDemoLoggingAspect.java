@@ -39,7 +39,7 @@ public class MyDemoLoggingAspect implements PointcutDeclarations {
 	@AfterReturning(pointcut = "selectAccounts()", returning = "rawResult")
 	public void afterReturningSelectAccountsAdvice(
 			JoinPoint joinPoint,
-			final List<Account> rawResult
+			List<Account> rawResult
 	) {
 		System.out.println("\n@Order(3) >>>>> Executing @AfterReturning advice <<<<<");
 
@@ -52,7 +52,26 @@ public class MyDemoLoggingAspect implements PointcutDeclarations {
 
 		// Make use of returning value
 		if (rawResult != null) {
+			System.out.println("> Raw Result: ");
 			rawResult.forEach(System.out::println);
 		}
+
+		// Post-Process return value
+		// Direct mutation: has effect
+		tamperData(rawResult);
+
+		// Assign new reference: no effect
+//		rawResult = processedObject;
+		rawResult = null;
+
+	}
+
+	private void tamperData(List<Account> rawResult) {
+		if (rawResult == null) return;
+
+		rawResult.forEach(account -> {
+			account.setName("foo");
+			account.setLevel("bar");
+		});
 	}
 }

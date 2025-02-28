@@ -1,6 +1,6 @@
 package com.herbivore.demo.myapp.model;
 
-public class Account {
+public class Account implements Cloneable{
 
 	private String name;
 
@@ -25,5 +25,16 @@ public class Account {
 			   "name='" + name + '\'' +
 			   ", level='" + level + '\'' +
 			   '}';
+	}
+
+	@Override
+	public Account clone() {
+		try {
+			Account clone = (Account) super.clone();
+			// TODO: copy mutable state here, so the clone can't change the internals of the original
+			return clone;
+		} catch (CloneNotSupportedException e) {
+			throw new AssertionError();
+		}
 	}
 }

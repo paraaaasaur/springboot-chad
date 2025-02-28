@@ -6,6 +6,7 @@ import com.herbivore.demo.myapp.model.Account;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 
 import static com.herbivore.demo.myapp.util.Trivial.aqtn;
 
@@ -46,9 +47,12 @@ public class UserServiceImpl implements UserService {
 //	@Transactional
 	@Override
 	public void demoTheAfterReturnAdvice() {
-		accountDAO.selectAccounts();
-		accountDAO.selectAccounts(0);
+		List<Account> accounts = accountDAO.selectAccounts();
+//		accountDAO.selectAccounts(0);
 		System.out.println("\n\n> Main program: demoTheAfterReturnAdvice()");
+
+		System.out.println("> Post-processed result: ");
+		accounts.forEach(System.out::println);
 
 		aqtn();
 	}
