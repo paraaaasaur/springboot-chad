@@ -21,7 +21,9 @@ public class MyappApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(UserService userService) {
 		return args -> {
-			userService.demoTheBeforeAdvice();
+//			userService.demoTheBeforeAdvice();
+
+			userService.demoTheAfterReturnAdvice();
 		};
 	}
 

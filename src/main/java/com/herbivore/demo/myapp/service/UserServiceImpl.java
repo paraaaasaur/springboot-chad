@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 
+import static com.herbivore.demo.myapp.util.Trivial.aqtn;
+
 @Service
 public class UserServiceImpl implements UserService {
 
-	private AccountDAO accountDAO;
+	private final AccountDAO accountDAO;
 
-	private MembershipDAO membershipDAO;
+	private final MembershipDAO membershipDAO;
 
 	protected UserServiceImpl(AccountDAO accountDAO, MembershipDAO membershipDAO) {
 		this.accountDAO = accountDAO;
@@ -37,5 +39,17 @@ public class UserServiceImpl implements UserService {
 
 		membershipDAO.addAccount();
 		membershipDAO.addSillyMember();
+
+		aqtn();
+	}
+
+//	@Transactional
+	@Override
+	public void demoTheAfterReturnAdvice() {
+		accountDAO.selectAccounts();
+		accountDAO.selectAccounts(0);
+		System.out.println("\n\n> Main program: demoTheAfterReturnAdvice()");
+
+		aqtn();
 	}
 }

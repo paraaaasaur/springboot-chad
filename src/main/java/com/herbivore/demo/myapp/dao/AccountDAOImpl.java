@@ -4,6 +4,8 @@ import com.herbivore.demo.myapp.model.Account;
 import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class AccountDAOImpl implements AccountDAO {
@@ -39,5 +41,17 @@ public class AccountDAOImpl implements AccountDAO {
 	@Override
 	public void updateDob(int id, Instant dob) {
 		System.out.println("> " + getClass() + ": updateDob(int id, Instant dob)");
+	}
+
+	@Override
+	public List<Account> selectAccounts() {
+
+		List<Account> sampleAccounts = new ArrayList<>();
+
+		sampleAccounts.add(new Account("Jane", "Doe"));
+		sampleAccounts.add(new Account("Black", "Jack"));
+		sampleAccounts.add(new Account("Kate", "Voegele"));
+
+		return sampleAccounts;
 	}
 }
