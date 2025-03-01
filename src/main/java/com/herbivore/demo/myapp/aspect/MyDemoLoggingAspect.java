@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static io.github.paraaaasaur.util.Toolbox.red;
+
 @Component
 @Aspect
 @Order(3)
@@ -116,7 +118,21 @@ public class MyDemoLoggingAspect implements PointcutDeclarations {
 		long begin = System.nanoTime();
 
 		// ↑↑↑↑↑ Before ↑↑↑↑↑
-		Object result = proceedingJoinPoint.proceed();
+		Object result = null;
+
+		try {
+			result = proceedingJoinPoint.proceed();
+		} catch (Exception e) {
+			System.out.println(red(e.getClass().getSimpleName() + ": " + e.getMessage()));
+
+			// Return a custom message as emergency result
+			result = "Small trouble here, but no worries! " +
+					 "Your private AOP helicopter is on the way :)";
+		} catch (Error e) {
+			System.out.println(red(e.getClass().getSimpleName() + ": " + e.getMessage()));
+
+			throw e;
+		}
 		// ↓↓↓↓↓ After ↓↓↓↓↓
 
 		long end = System.nanoTime();
@@ -127,7 +143,7 @@ public class MyDemoLoggingAspect implements PointcutDeclarations {
 //		System.out.println(result);
 
 
-		return "";
+		return result;
 	}
 
 }

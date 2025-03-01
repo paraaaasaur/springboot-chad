@@ -108,4 +108,18 @@ public class DemoServiceImpl implements DemoService {
 
 		aqtn();
 	}
+
+//	@Transactional
+	@Override
+	public void demoTheAroundAdviceHandleException() {
+		System.out.println("\n> Main program: demoTheAroundAdviceHandleException");
+
+		System.out.println("> Calling getFortune(tripWire = true)");
+
+		String fortune = trafficFortuneService.getFortune(true);
+
+		System.out.println("> My fortune is: " + fortune);
+
+		aqtn();
+	}
 }

@@ -30,7 +30,9 @@ public class MyappApplication {
 
 //			demoService.demoTheAfterAdvice();
 
-			demoService.demoTheAroundAdvice();
+//			demoService.demoTheAroundAdvice();
+
+			demoService.demoTheAroundAdviceHandleException();
 		};
 	}
 

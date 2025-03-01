@@ -11,4 +11,6 @@ public interface DemoService {
 	void demoTheAfterAdvice();
 
 	void demoTheAroundAdvice();
+
+	void demoTheAroundAdviceHandleException();
 }
