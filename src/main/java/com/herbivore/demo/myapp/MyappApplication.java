@@ -25,7 +25,9 @@ public class MyappApplication {
 
 //			userService.demoTheAfterReturnAdvice();
 
-			userService.demoTheAfterThrowingAdvice();
+//			userService.demoTheAfterThrowingAdvice();
+
+			userService.demoTheAfterAdvice();
 		};
 	}
 

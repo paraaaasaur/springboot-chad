@@ -2,10 +2,7 @@ package com.herbivore.demo.myapp.aspect;
 
 import com.herbivore.demo.myapp.model.Account;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -92,5 +89,16 @@ public class MyDemoLoggingAspect implements PointcutDeclarations {
 		// Log the throwable
 		System.err.println("> Throwable Type: " + rot.getClass().getSimpleName());
 		System.err.println("> Error message: " + rot.getMessage());
+	}
+
+	@After("selectAccounts()")
+	public void afterSelectAccountsAdvice(JoinPoint joinPoint) {
+		System.out.println("\n@Order(3) >>>>> Executing @After (finally) advice <<<<<");
+
+		// Display metadata
+		MethodSignature methodSig = (MethodSignature) joinPoint.getSignature();
+		System.out.println("> Method Signature: " + methodSig);
+		String methodName = methodSig.toShortString();
+		System.out.println("> Executing @AfterReturning advice on: " + methodName);
 	}
 }

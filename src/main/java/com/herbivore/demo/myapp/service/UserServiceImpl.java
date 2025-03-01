@@ -7,8 +7,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.IntStream;
 
 import static com.herbivore.demo.myapp.util.Trivial.aqtn;
+import static io.github.paraaaasaur.util.Toolbox.cyan;
+import static io.github.paraaaasaur.util.Toolbox.red;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -65,6 +69,25 @@ public class UserServiceImpl implements UserService {
 		} catch (Exception e) {
 			System.err.println(e.getClass().getSimpleName() + ": " + e.getMessage());
 		}
+
+		aqtn();
+	}
+
+//	@Transactional
+	@Override
+	public void demoTheAfterAdvice() {
+		IntStream.range(0, 10)
+				.forEach(i -> {
+					boolean coinFlip = ThreadLocalRandom.current().nextBoolean();
+					try {
+						accountDAO.selectAccounts(coinFlip);
+						System.out.println(cyan("SUCCESS"));
+					} catch (Exception e) {
+						System.out.println(cyan("FAILURE"));
+						System.out.println(red(e.getClass().getSimpleName() + ": " + e.getMessage()));
+//						System.err.flush();
+					}
+				});
 
 		aqtn();
 	}
