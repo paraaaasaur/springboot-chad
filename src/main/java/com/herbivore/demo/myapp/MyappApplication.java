@@ -7,7 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import static io.github.paraaaasaur.util.Toolbox.*;
+import static io.github.paraaaasaur.util.Toolbox.yellowBg;
 
 
 @SpringBootApplication
@@ -29,12 +29,12 @@ public class MyappApplication {
 
 	@PostConstruct
 	public void aparecium() {
-		System.out.println(yellow("✨ Aparecium! MagicalBean is ready for action."));
+		System.out.println(yellowBg("✨ Aparecium! MagicalBean is ready for action."));
 	}
 
 	@PreDestroy
 	public void evanesco() {
-		System.out.println(blue("✨ Evanesco! MagicalBean is vanishing gracefully."));
+		System.out.println(yellowBg("✨ Evanesco! MagicalBean is vanishing gracefully."));
 	}
 
 }
