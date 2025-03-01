@@ -5,4 +5,6 @@ public interface UserService {
 	void demoTheBeforeAdvice();
 
 	void demoTheAfterReturnAdvice();
+
+	void demoTheAfterThrowingAdvice();
 }

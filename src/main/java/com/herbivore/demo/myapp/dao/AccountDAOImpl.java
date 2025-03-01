@@ -2,6 +2,7 @@ package com.herbivore.demo.myapp.dao;
 
 import com.herbivore.demo.myapp.model.Account;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.Assert;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -45,6 +46,13 @@ public class AccountDAOImpl implements AccountDAO {
 
 	@Override
 	public List<Account> selectAccounts() {
+		return selectAccounts(true);
+	}
+
+	@Override
+	public List<Account> selectAccounts(boolean trueForFreeMembership) {
+		Assert.isTrue(!trueForFreeMembership, "( ^)o(^ )ｵｶｼｲﾀﾞﾛ");
+
 
 		List<Account> sampleAccounts = new ArrayList<>();
 

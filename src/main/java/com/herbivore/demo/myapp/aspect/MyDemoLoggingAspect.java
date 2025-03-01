@@ -3,6 +3,7 @@ package com.herbivore.demo.myapp.aspect;
 import com.herbivore.demo.myapp.model.Account;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -73,5 +74,23 @@ public class MyDemoLoggingAspect implements PointcutDeclarations {
 			account.setName("foo");
 			account.setLevel("bar");
 		});
+	}
+
+	@AfterThrowing(pointcut = "selectAccounts()", throwing = "rot")
+	public void afterThrowingSelectAccountsAdvice(
+			JoinPoint joinPoint,
+			Throwable rot // readonly throwable
+	) {
+		System.out.println("\n@Order(3) >>>>> Executing @AfterThrowing advice <<<<<");
+
+		// Display metadata
+		MethodSignature methodSig = (MethodSignature) joinPoint.getSignature();
+		System.out.println("> Method Signature: " + methodSig);
+		String methodName = methodSig.toShortString();
+		System.out.println("> Executing @AfterReturning advice on: " + methodName);
+
+		// Log the throwable
+		System.err.println("> Throwable Type: " + rot.getClass().getSimpleName());
+		System.err.println("> Error message: " + rot.getMessage());
 	}
 }

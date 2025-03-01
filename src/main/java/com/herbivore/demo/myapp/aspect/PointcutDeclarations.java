@@ -16,6 +16,6 @@ public interface PointcutDeclarations {
 	@Pointcut("forDaoPackage() && !(find() || update())")
 	default void forDaoPackageNoFindUpdate() {}
 
-	@Pointcut("execution(!boolean com.herbivore..dao.*.selectAccounts(..))")
+	@Pointcut("execution(!float com.herbivore..dao.*.selectAccounts(..))")
 	default void selectAccounts() {}
 }

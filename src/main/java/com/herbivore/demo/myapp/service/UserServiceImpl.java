@@ -56,4 +56,16 @@ public class UserServiceImpl implements UserService {
 
 		aqtn();
 	}
+
+//	@Transaction
+	@Override
+	public void demoTheAfterThrowingAdvice() {
+		try {
+			accountDAO.selectAccounts();
+		} catch (Exception e) {
+			System.err.println(e.getClass().getSimpleName() + ": " + e.getMessage());
+		}
+
+		aqtn();
+	}
 }

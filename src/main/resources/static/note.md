@@ -1,26 +1,19 @@
 # Advice Type
 
-## @AfterReturning Advice: Post-Processing Return Value
+## @AfterThrowing
 
-* ‼️ The processed object is referenced directly, not through the variable 
-  pointing to it. Direct mutations are required for changes to take effect.
-* 
-    ```java
-        @AfterReturning(pointcut = "selectAccounts()", returning = "rawResult")
-        public void afterReturningSelectAccountsAdvice(
-                JoinPoint joinPoint,
-                List<Account> rawResult
-        ) {
-            // Post-Process return value
-            // Direct mutation -> has effects
-            rawResult.forEach(account -> {
-                account.setName("foo");
-                account.setLevel("bar");  
-            });
-  
-            // Assigning a new reference -> no effect
-            rawResult = processedResult; 
-            rawResult = null;
-  
-        }
-    ```
+* Allows advice to read about the exception
+* DOESN'T have the ability to handle the exception
+  * It keeps propagates to the calling method outside
+  * Use `@Around` if you wish to handle the exception
+
+* Common use cases:
+  * Log the exception (to a file, db, etc.)
+  * Perform auditing on the exception
+  * Notify DevOps team (via SMS, email, etc.)
+  * Handy reuse as cutting-logic rather than bind it in main program
+
+* Process
+  1. In service method, add try-catch for error-handling
+  2. Make an exception-throwing method
+  3. Add @AfterThrowing advice

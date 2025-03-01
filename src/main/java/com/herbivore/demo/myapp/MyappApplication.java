@@ -23,7 +23,9 @@ public class MyappApplication {
 		return args -> {
 //			userService.demoTheBeforeAdvice();
 
-			userService.demoTheAfterReturnAdvice();
+//			userService.demoTheAfterReturnAdvice();
+
+			userService.demoTheAfterThrowingAdvice();
 		};
 	}
 

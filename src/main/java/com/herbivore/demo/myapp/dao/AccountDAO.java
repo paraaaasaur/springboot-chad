@@ -24,4 +24,6 @@ public interface AccountDAO {
 	default void selectAccounts(int dummyParam) {
 		System.out.println("> Testing if @AfterReturning works on a void method");
 	}
+
+	List<Account> selectAccounts(boolean trueForFreeMembership);
 }
