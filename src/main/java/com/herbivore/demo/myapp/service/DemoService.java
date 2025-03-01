@@ -1,6 +1,6 @@
 package com.herbivore.demo.myapp.service;
 
-public interface UserService {
+public interface DemoService {
 
 	void demoTheBeforeAdvice();
 
@@ -9,4 +9,6 @@ public interface UserService {
 	void demoTheAfterThrowingAdvice();
 
 	void demoTheAfterAdvice();
+
+	void demoTheAroundAdvice();
 }

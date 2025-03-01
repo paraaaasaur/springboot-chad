@@ -1,6 +1,7 @@
 package com.herbivore.demo.myapp;
 
-import com.herbivore.demo.myapp.service.UserService;
+import com.herbivore.demo.myapp.service.TrafficFortuneService;
+import com.herbivore.demo.myapp.service.DemoService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import org.springframework.boot.CommandLineRunner;
@@ -19,15 +20,17 @@ public class MyappApplication {
 	}
 
 	@Bean
-	public CommandLineRunner commandLineRunner(UserService userService) {
+	public CommandLineRunner commandLineRunner(DemoService demoService, TrafficFortuneService trafficFortuneService) {
 		return args -> {
-//			userService.demoTheBeforeAdvice();
+//			demoService.demoTheBeforeAdvice();
 
-//			userService.demoTheAfterReturnAdvice();
+//			demoService.demoTheAfterReturnAdvice();
 
-//			userService.demoTheAfterThrowingAdvice();
+//			demoService.demoTheAfterThrowingAdvice();
 
-			userService.demoTheAfterAdvice();
+//			demoService.demoTheAfterAdvice();
+
+			demoService.demoTheAroundAdvice();
 		};
 	}
 

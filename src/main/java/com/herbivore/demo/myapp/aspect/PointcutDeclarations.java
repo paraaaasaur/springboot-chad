@@ -18,4 +18,7 @@ public interface PointcutDeclarations {
 
 	@Pointcut("execution(!float com.herbivore..dao.*.selectAccounts(..))")
 	default void selectAccounts() {}
+
+	@Pointcut("execution(* com.herbivore..service.*.getFortune(..))")
+	default void getFortune() {}
 }

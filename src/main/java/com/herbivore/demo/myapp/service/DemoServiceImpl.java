@@ -15,15 +15,18 @@ import static io.github.paraaaasaur.util.Toolbox.cyan;
 import static io.github.paraaaasaur.util.Toolbox.red;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class DemoServiceImpl implements DemoService {
 
 	private final AccountDAO accountDAO;
 
 	private final MembershipDAO membershipDAO;
 
-	protected UserServiceImpl(AccountDAO accountDAO, MembershipDAO membershipDAO) {
+	private final TrafficFortuneService trafficFortuneService;
+
+	protected DemoServiceImpl(AccountDAO accountDAO, MembershipDAO membershipDAO, TrafficFortuneService trafficFortuneService) {
 		this.accountDAO = accountDAO;
 		this.membershipDAO = membershipDAO;
+		this.trafficFortuneService = trafficFortuneService;
 	}
 
 //	@Transactional
@@ -88,6 +91,20 @@ public class UserServiceImpl implements UserService {
 //						System.err.flush();
 					}
 				});
+
+		aqtn();
+	}
+
+	//	@Transactional
+	@Override
+	public void demoTheAroundAdvice() {
+		System.out.println("\n> Main program: demoTheAroundAdvice");
+
+		System.out.println("> Calling getFortune()");
+
+		String fortune = trafficFortuneService.getFortune();
+
+		System.out.println("> My fortune is: " + fortune);
 
 		aqtn();
 	}

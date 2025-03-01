@@ -2,6 +2,7 @@ package com.herbivore.demo.myapp.aspect;
 
 import com.herbivore.demo.myapp.model.Account;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.Order;
@@ -101,4 +102,32 @@ public class MyDemoLoggingAspect implements PointcutDeclarations {
 		String methodName = methodSig.toShortString();
 		System.out.println("> Executing @AfterReturning advice on: " + methodName);
 	}
+
+	@Around("getFortune()")
+	public Object aroundAdvice(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+		System.out.println("\n@Order(3) >>>>> Executing @Around advice <<<<<");
+
+		// Display metadata
+		MethodSignature methodSig = (MethodSignature) proceedingJoinPoint.getSignature();
+		System.out.println("> Method Signature: " + methodSig);
+		String methodName = methodSig.toShortString();
+		System.out.println("> Executing @AfterReturning advice on: " + methodName);
+
+		long begin = System.nanoTime();
+
+		// ↑↑↑↑↑ Before ↑↑↑↑↑
+		Object result = proceedingJoinPoint.proceed();
+		// ↓↓↓↓↓ After ↓↓↓↓↓
+
+		long end = System.nanoTime();
+
+		long duration = end - begin;
+		System.out.println("Duration: " + duration / 1_000_000d + "(ms)" );
+
+//		System.out.println(result);
+
+
+		return "";
+	}
+
 }
