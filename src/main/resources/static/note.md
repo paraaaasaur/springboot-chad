@@ -1,9 +1,4 @@
-# Advice Type
+# Grand Finale
 
-## @Around
-
-### Handling Exception
-
-* First of all - No definite answer for how to handle exceptions
-* Common Scenario: Handle trivial exceptions, while re-throw certain 
-  exceptions or error to outer program, or alert devs
+* Combines MVC + CRUD + Spring Security + AOP
+* Run script-01 if db employee-directory doesn't exist
